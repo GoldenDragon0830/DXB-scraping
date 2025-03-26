@@ -17,8 +17,8 @@ async function scrapeTransactionDetails(url) {
         const page = await browser.newPage();
 
         await page.goto(url, {
-            waitUntil: 'load', // Wait until the network is idle
-            timeout: 100000, // 60 seconds timeout
+            waitUntil: 'networkidle2', // Wait until the network is idle
+            timeout: 60000, // 60 seconds timeout
         });
 
         await waitForTimeout(3000);
@@ -26,8 +26,6 @@ async function scrapeTransactionDetails(url) {
         await page.waitForSelector('#SearchInput');
         await page.click('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
-
-        await waitForTimeout(3000);
   
         // await page.screenshot({ path: 'debug.png', fullPage: true });
 
