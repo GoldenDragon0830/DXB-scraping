@@ -18,22 +18,17 @@ async function scrapeTransactionDetails(url) {
         await page.waitForSelector('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
 
-        await page.waitForSelector('#AreasList', { visible: true, timeout: 10000 });
-
-        const areasListHTML = await page.evaluate(() => {
-            const element = document.querySelector('#AreasList');
-            return element ? element.innerHTML : 'Element not found';
-        });
-
-        console.log('AreasList HTML:', areasListHTML);
+        await page.waitForTimeout(3000);
   
-        await page.screenshot({ path: 'debug.png', fullPage: true });
+        // await page.screenshot({ path: 'debug.png', fullPage: true });
 
         await page.waitForSelector('#AreasList > article:first-of-type', { visible: true, timeout: 10000 });
         await page.click('#AreasList > article:first-of-type');
 
         await page.waitForSelector('.submit-btn');
         await page.click('.submit-btn');
+
+        await page.waitForTimeout(10000);
     } catch (error) {
         console.error('Error during scraping:', error);
     } finally {
