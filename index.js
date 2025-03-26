@@ -22,6 +22,7 @@ async function scrapeTransactionDetails(url) {
         });
 
         await page.waitForSelector('#SearchInput');
+        await page.click('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
 
         await waitForTimeout(3000);
