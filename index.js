@@ -21,8 +21,10 @@ async function scrapeTransactionDetails(url) {
             timeout: 60000, // 60 seconds timeout
         });
 
-        await waitForTimeout(3000);
+        // await waitForTimeout(3000);
 
+        await page.waitForSelector('#FeaturedSearches > article:nth-child(1)', {visible: true, timeout: 10000});
+        
         await page.waitForSelector('#SearchInput');
         await page.click('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
