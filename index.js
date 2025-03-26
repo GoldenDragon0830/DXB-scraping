@@ -17,7 +17,7 @@ async function scrapeTransactionDetails(url) {
         const page = await browser.newPage();
 
         await page.goto(url, {
-            waitUntil: 'networkidle2', // Wait until the network is idle
+            waitUntil: 'load', // Wait until the network is idle
             timeout: 60000, // 60 seconds timeout
         });
 
