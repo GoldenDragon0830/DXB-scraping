@@ -63,7 +63,7 @@ async function scrapeTransactionDetails(url) {
 }
 
 
-const targetUrl = 'https://dxbinteract.com/';
+const targetUrl = 'https://dxbinteract.com/dubai-house-prices/';
 
 scrapeTransactionDetails(targetUrl)
   .then(results => {
