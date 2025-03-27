@@ -49,7 +49,7 @@ async function scrapeTransactionDetails(url) {
 }
 
 
-const targetUrl = 'https://dxbinteract.com/';
+const targetUrl = 'https://www.upwork.com/';
 
 scrapeTransactionDetails(targetUrl)
   .then(results => {
