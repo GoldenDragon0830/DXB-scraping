@@ -62,11 +62,6 @@ async function scrapeTransactionDetails(url) {
         let detailCount = 0;
 
         do{
-
-            nextButton = await page.$$('a#soldhistorynext');
-            if(nextButton.length == 0)
-                break;
-
             const detailButtons = await page.$$('a.t-Button--iconRight');
 
             console.log('Row count => ', detailButtons.length);
@@ -77,11 +72,14 @@ async function scrapeTransactionDetails(url) {
                 // await waitForTimeout(2000);
             }
 
-            nextButton[0].click();
+            nextButton = await page.$$('a#soldhistorynext');
+
+            if(nextButton.length > 0)
+                nextButton[0].click();
             await waitForTimeout(2000);
         }while((await page.$$('a#soldhistorynext')) != []);
 
-        console.log(detailCount);
+        console.log('Total detail => ', detailCount);
 
     } catch (error) {
         console.error('Error during scraping:', error);
