@@ -22,8 +22,8 @@ async function scrapeTransactionDetails(url) {
         });
         console.log('@@@@@@@@@@@@@');
         // await waitForTimeout(3000);
-        await page.waitForSelector("#134_menubar_1i", {timeout: 30000});
-        await page.click('#134_menubar_1i');
+        // await page.waitForSelector("#134_menubar_1i", {timeout: 30000});
+        // await page.click('#134_menubar_1i');
         
         // await page.waitForSelector('#FeaturedSearches > article:nth-child(1)', {timeout: 30000});
         
