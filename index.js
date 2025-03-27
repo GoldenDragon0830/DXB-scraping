@@ -64,7 +64,7 @@ async function scrapeTransactionDetails(url) {
 
             nextButton = await page.$$('a#soldhistorynext');
             nextButton[0].click();
-            await waitForTimeout(1000);
+            await waitForTimeout(2000);
 
             console.log("next");
         }while((await page.$$('a#soldhistorynext')) != [])
