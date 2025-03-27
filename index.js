@@ -65,7 +65,7 @@ async function scrapeTransactionDetails(url) {
                 .map(element => element.href);
         });
 
-        console.log(detailButtons.length);
+        console.log(detailButtons[0]);
 
     } catch (error) {
         console.error('Error during scraping:', error);
