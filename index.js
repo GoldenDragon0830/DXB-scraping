@@ -59,17 +59,14 @@ async function scrapeTransactionDetails(url) {
 
         await waitForTimeout(2000);
 
-        const detailButtonSelectors = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('a'))
-                .filter(element => element.textContent.trim() === 'Details')
-                .map(element => element.getAttribute('href')); 
-        });
+        const detailButtons = await page.$$('a.t-Button--iconRight');
 
-        console.log('Row count => ', detailButtonSelectors.length);
+        console.log('Row count => ', detailButtons.length);
 
-        if (detailButtonSelectors.length > 0) {
-            await page.click(detailButtonSelectors[0]);
+        if (detailButtons.length > 0) {
+            await detailButtons[0].click();
             console.log('Clicked on the first "Details" button');
+            await waitForTimeout(2000);
         }
 
     } catch (error) {
