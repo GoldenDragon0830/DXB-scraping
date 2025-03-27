@@ -72,10 +72,13 @@ async function scrapeTransactionDetails(url) {
                 // await waitForTimeout(2000);
             }
 
+            const nextButton = await page.$$('a#soldhistorynext');
+
             if(nextButton.length > 0)
                 nextButton[0].click();
             else
                 break;
+            
             await waitForTimeout(2000);
         }while(1);
 
