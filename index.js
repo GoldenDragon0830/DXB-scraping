@@ -67,7 +67,7 @@ async function scrapeTransactionDetails(url) {
 
         console.log('row count => ', detailButtons.length);
 
-        await button[0].click();
+        await detailButtons[0].click();
 
     } catch (error) {
         console.error('Error during scraping:', error);
