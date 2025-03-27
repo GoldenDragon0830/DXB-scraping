@@ -59,11 +59,13 @@ async function scrapeTransactionDetails(url) {
 
         await waitForTimeout(2000);
 
-        const detailButtons = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('a'))
-                .filter(element => element.textContent.includes('Details'))
-                .map(element => element.href);
-        });
+        const detailButtons = await page.$$('button:has-text("Details")');
+
+        // const detailButtons = await page.evaluate(() => {
+        //     return Array.from(document.querySelectorAll('a'))
+        //         .filter(element => element.textContent.includes('Details'))
+        //         .map(element => element.href);
+        // });
 
         console.log(detailButtons[0]);
 
