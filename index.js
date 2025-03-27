@@ -1,10 +1,7 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-async function waitForTimeout(timeout) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, timeout)
-    })
-}
+puppeteer.use(StealthPlugin());
 
 async function scrapeTransactionDetails(url) {
 
