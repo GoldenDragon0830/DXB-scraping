@@ -7,20 +7,31 @@ async function waitForTimeout(timeout) {
 }
 
 async function scrapeTransactionDetails(url) {
+
+    const proxyServer = 'ultra.marsproxies.com:44445';
+
     const browser = await puppeteer.launch({
         headless: false, 
         defaultViewport: null,
-        args: ['--start-maximized']
+        args: [
+            '--start-maximized',
+            `--proxy-server=${proxyServer}`
+        ]
     });
 
     try {
         const page = await browser.newPage();
 
+        await page.authenticate({
+            username: 'mr89036ikxS',
+            password: 'MvE5Z1dhWK_country-tr_city-malatya_session-i1hisgf5_lifetime-168h'
+        });
+
         await page.goto(url, {
             waitUntil: 'load', // Wait until the network is idle
             timeout: 60000, // 60 seconds timeout
         });
-        console.log('@@@@@@@@@@@@@');
+
         // await waitForTimeout(3000);
         // await page.waitForSelector("#134_menubar_1i", {timeout: 30000});
         // await page.click('#134_menubar_1i');
