@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-puppeteer.use(StealthPlugin());
+// puppeteer.use(StealthPlugin());
 
 async function waitForTimeout(timeout) {
     return new Promise((resolve) => {
