@@ -58,16 +58,22 @@ async function scrapeTransactionDetails(url) {
         await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
 
         await waitForTimeout(2000);
+        // soldhistorynext
+        // soldhistoryprev
+        // do{
+        // }while()
 
-        const detailButtons = await page.$$('a.t-Button--iconRight');
+        console.log(page.$$('a#soldhistorynext'));
 
-        console.log('Row count => ', detailButtons.length);
+        // const detailButtons = await page.$$('a.t-Button--iconRight');
 
-        if (detailButtons.length > 0) {
-            await detailButtons[0].click();
-            console.log('Clicked on the first "Details" button');
-            await waitForTimeout(2000);
-        }
+        // console.log('Row count => ', detailButtons.length);
+
+        // if (detailButtons.length > 0) {
+        //     await detailButtons[0].click();
+        //     console.log('Clicked on the first "Details" button');
+        //     await waitForTimeout(2000);
+        // }
 
     } catch (error) {
         console.error('Error during scraping:', error);
