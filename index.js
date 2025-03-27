@@ -64,7 +64,7 @@ async function scrapeTransactionDetails(url) {
         // }while(await page.$$('a#soldhistoryprev'))
         
 
-        console.log(await page.$$('a#soldhistoryprev'));
+        console.log(await page.$$('a#soldhistorynext'));
 
         // const detailButtons = await page.$$('a.t-Button--iconRight');
 
