@@ -52,12 +52,12 @@ async function scrapeTransactionDetails(url) {
         await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
         await page.click('#AreasList > article:first-of-type');
 
-        waitForTimeout(1000);
+        waitForTimeout(2000);
 
         await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(7)', { timeout: 30000 });
         await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
 
-        waitForTimeout(1000);
+        waitForTimeout(2000);
 
     } catch (error) {
         console.error('Error during scraping:', error);
