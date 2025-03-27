@@ -5,14 +5,14 @@ puppeteer.use(StealthPlugin());
 
 async function scrapeTransactionDetails(url) {
 
-    const proxyServer = '137.59.4.211:6080';
+    // const proxyServer = '137.59.4.211:6080';
 
     const browser = await puppeteer.launch({
         headless: false, 
         defaultViewport: null,
         args: [
             '--start-maximized',
-            `--proxy-server=${proxyServer}`
+            // `--proxy-server=${proxyServer}`
         ]
     });
 
@@ -25,10 +25,10 @@ async function scrapeTransactionDetails(url) {
             'accept-language': 'en-US,en;q=0.9',
         });
 
-        await page.authenticate({
-            username: 'PICpic123',
-            password: 'upwork123'
-        });
+        // await page.authenticate({
+        //     username: 'PICpic123',
+        //     password: 'upwork123'
+        // });
 
         await page.goto(url, {
             waitUntil: 'load', // Wait until the network is idle
