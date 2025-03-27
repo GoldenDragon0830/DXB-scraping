@@ -60,11 +60,15 @@ async function scrapeTransactionDetails(url) {
         await waitForTimeout(2000);
         // soldhistorynext
         // soldhistoryprev
-        // do{
-        // }while(await page.$$('a#soldhistoryprev'))
-        
+        do{
 
-        console.log(await page.$$('a#soldhistorynext'));
+            nextButton = await page.$$('a#soldhistorynext');
+            nextButton[0].click();
+            await waitForTimeout(1000);
+
+            console.log("next");
+        }while((await page.$$('a#soldhistorynext')) != [])
+        
 
         // const detailButtons = await page.$$('a.t-Button--iconRight');
 
