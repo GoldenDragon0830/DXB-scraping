@@ -57,11 +57,15 @@ async function scrapeTransactionDetails(url) {
         await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(7)', { timeout: 30000 });
         await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
 
-        const detailButtons = await page.$$('a:has-text(" Details")');
+        await waitForTimeout(2000);
+
+        const detailButtons = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('a'))
+                .filter(element => element.textContent.includes('Details'))
+                .map(element => element.href);
+        });
 
         console.log(detailButtons.length);
-
-        await waitForTimeout(2000);
 
     } catch (error) {
         console.error('Error during scraping:', error);
