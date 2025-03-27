@@ -73,9 +73,8 @@ async function scrapeTransactionDetails(url) {
     
             if (detailButtons.length > 0) {
                 detailCount += detailButtons.length;
-                await detailButtons[0].click();
-                console.log('Clicked on the first "Details" button');
-                await waitForTimeout(2000);
+                // await detailButtons[0].click();
+                // await waitForTimeout(2000);
             }
 
             nextButton[0].click();
