@@ -53,9 +53,13 @@ async function scrapeTransactionDetails(url) {
         await page.click('#AreasList > article:first-of-type');
 
         await waitForTimeout(2000);
-
+        
         await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(7)', { timeout: 30000 });
         await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
+
+        const detailButtons = await page.$$('a:has-text(" Details")');
+
+        console.log(detailButtons.length);
 
         await waitForTimeout(2000);
 
