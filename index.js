@@ -42,7 +42,7 @@ async function scrapeTransactionDetails(url) {
         await page.click('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
         
-        await page.waitForSelector('#AreasList > article:first-of-type', { visible: true, timeout: 30000 });
+        await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
         await page.click('#AreasList > article:first-of-type');
 
         // await page.waitForSelector('.submit-btn');
