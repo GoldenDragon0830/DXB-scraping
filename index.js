@@ -40,6 +40,8 @@ async function scrapeTransactionDetails(url) {
             waitUntil: 'load', // Wait until the network is idle
             timeout: 60000, // 60 seconds timeout
         });
+
+        waitForTimeout(3000);
         
         await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
         await page.click('#LocationsStack > a');
