@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-// puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin());
 
 async function waitForTimeout(timeout) {
     return new Promise((resolve) => {
@@ -25,11 +25,11 @@ async function scrapeTransactionDetails(url) {
     try {
         const page = await browser.newPage();
 
-        // await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.180 Safari/537.36');
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.180 Safari/537.36');
 
-        // await page.setExtraHTTPHeaders({
-        //     'accept-language': 'en-US,en;q=0.9',
-        // });
+        await page.setExtraHTTPHeaders({
+            'accept-language': 'en-US,en;q=0.9',
+        });
 
         await page.authenticate({
             username: 'PICpic123',
