@@ -47,16 +47,18 @@ async function scrapeTransactionDetails(url) {
         await page.click('#LocationsStack > a');
 
         await page.waitForSelector("#SearchInput", {timeout: 30000});
-        // await page.click('#SearchInput');
         await page.type('#SearchInput', 'Jumeirah Lakes Towers');
         
         await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
         await page.click('#AreasList > article:first-of-type');
 
-        // await page.waitForSelector('.submit-btn');
-        // await page.click('.submit-btn');
+        waitForTimeout(1000);
 
-        // await waitForTimeout(10000);
+        await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(7)', { timeout: 30000 });
+        await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
+
+        waitForTimeout(1000);
+
     } catch (error) {
         console.error('Error during scraping:', error);
     } finally {
