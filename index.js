@@ -46,12 +46,12 @@ async function scrapeTransactionDetails(url) {
         await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
         await page.click('#LocationsStack > a');
 
-        // await page.waitForSelector("#SearchInput", {timeout: 30000});
-        // await page.click('#SearchInput');
-        // await page.type('#SearchInput', 'Jumeirah Lakes Towers');
+        await page.waitForSelector("#SearchInput", {timeout: 30000});
+        await page.click('#SearchInput');
+        await page.type('#SearchInput', 'Jumeirah Lakes Towers');
         
-        // await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
-        // await page.click('#AreasList > article:first-of-type');
+        await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
+        await page.click('#AreasList > article:first-of-type');
 
         // await page.waitForSelector('.submit-btn');
         // await page.click('.submit-btn');
