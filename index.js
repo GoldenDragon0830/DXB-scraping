@@ -77,7 +77,7 @@ async function scrapeTransactionDetails(url) {
             if(nextButton.length > 0)
                 nextButton[0].click();
             await waitForTimeout(2000);
-        }while((await page.$$('a#soldhistorynext')) != []);
+        }while((await page.$$('a#soldhistorynext')).length > 0);
 
         console.log('Total detail => ', detailCount);
 
