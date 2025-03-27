@@ -59,15 +59,15 @@ async function scrapeTransactionDetails(url) {
 
         await waitForTimeout(2000);
 
-        const detailButtons = await page.$$('button:has-text("Details")');
+        const detailButtons = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('a'))
+                .filter(element => element.textContent.trim() === 'Details')
+                .map(element => element);
+        });
 
-        // const detailButtons = await page.evaluate(() => {
-        //     return Array.from(document.querySelectorAll('a'))
-        //         .filter(element => element.textContent.includes('Details'))
-        //         .map(element => element.href);
-        // });
+        console.log('row count => ', detailButtons.length);
 
-        console.log(detailButtons[0]);
+        await button[0].click();
 
     } catch (error) {
         console.error('Error during scraping:', error);
