@@ -8,7 +8,7 @@ async function waitForTimeout(timeout) {
 
 async function scrapeTransactionDetails(url) {
 
-    const proxyServer = 'ultra.marsproxies.com:44445';
+    const proxyServer = '137.59.4.211:6080';
 
     const browser = await puppeteer.launch({
         headless: false, 
@@ -23,8 +23,8 @@ async function scrapeTransactionDetails(url) {
         const page = await browser.newPage();
 
         await page.authenticate({
-            username: 'mr89036ikxS',
-            password: 'MvE5Z1dhWK_country-tr_city-malatya_session-i1hisgf5_lifetime-168h'
+            username: 'PICpic123',
+            password: 'upwork123'
         });
 
         await page.goto(url, {
@@ -60,7 +60,7 @@ async function scrapeTransactionDetails(url) {
 }
 
 
-const targetUrl = 'https://www.upwork.com/';
+const targetUrl = 'https://dxbinteract.com/';
 
 scrapeTransactionDetails(targetUrl)
   .then(results => {
