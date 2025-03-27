@@ -68,6 +68,13 @@ async function scrapeTransactionDetails(url) {
     
             if (detailButtons.length > 0) {
                 detailCount += detailButtons.length;
+                for(const i=0; i<detailButtons.length ; i++) {
+                    await detailButtons[i].click();
+                    await waitForTimeout(2000);
+
+                    await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
+                    await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
+                }
                 // await detailButtons[0].click();
                 // await waitForTimeout(2000);
             }
@@ -78,7 +85,7 @@ async function scrapeTransactionDetails(url) {
                 nextButton[0].click();
             else
                 break;
-            
+
             await waitForTimeout(2000);
         }while(1);
 
