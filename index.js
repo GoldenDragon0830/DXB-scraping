@@ -76,10 +76,12 @@ async function scrapeTransactionDetails(url) {
                     await waitForTimeout(2000);
                     index++;
                     console.log(index);
-
-                    await page.waitForSelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b", { visible: true });
-
-                    const textContent = await page.evaluate(() => {
+                    await page.waitForSelector('#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable', { visible: true });
+                    
+                    const frameHandle = await page.waitForSelector('#apex_dialog_1 > iframe');
+                    const frame = await frameHandle.contentFrame();
+                    
+                    const textContent = await frame.evaluate(() => {
                         const element = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b");
                         return element ? element.innerText.trim() : null;
                     });
