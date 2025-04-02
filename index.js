@@ -61,6 +61,8 @@ async function scrapeTransactionDetails(url) {
 
         let detailCount = 0;
 
+        let index = 0;
+
         do{
             const detailButtons = await page.$$('a.t-Button--iconRight');
 
@@ -71,7 +73,8 @@ async function scrapeTransactionDetails(url) {
                 for(let i=0; i<detailButtons.length ; i++) {
                     await detailButtons[i].click();
                     await waitForTimeout(2000);
-                    console.log(i+1);
+                    index++;
+                    console.log(index);
                     await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
                     await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
                 }
