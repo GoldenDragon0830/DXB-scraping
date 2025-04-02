@@ -77,13 +77,22 @@ async function scrapeTransactionDetails(url) {
                     index++;
                     console.log(index);
 
-                    let location;
+                    await page.waitForSelector('b .fa-map-marker-o', {timeout: 30000});
 
-                    await page.evaluate(() => {
-                        location = document.querySelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b').parentElement.textContent.trim();
-                        console.log(location);
+                    const textContent = await page.evaluate(() => {
+                        const spanElement = document.querySelector('b .fa-map-marker-o');
+                        if (spanElement) {
+                            const parentElement = spanElement.parentElement;
+                            return parentElement ? parentElement.textContent.trim() : null;
+                        }
+                        return null;
                     });
 
+                    if (textContent) {
+                        console.log('Extracted text:', textContent);
+                    } else {
+                        console.log('Element not found or text not extracted.');
+                    }
 
                     await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
                     await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
