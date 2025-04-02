@@ -79,7 +79,7 @@ async function scrapeTransactionDetails(url) {
 
                     let location;
 
-                    await waitForSelector('b .fa-map-marker-o', {timeout: 30000});
+                    await page.waitForSelector('b .fa-map-marker-o', {timeout: 30000});
                     location = document.querySelector('b .fa-map-marker-o').parentElement.textContent.trim();
 
                     console.log(location);
