@@ -77,9 +77,8 @@ async function scrapeTransactionDetails(url) {
                     index++;
                     console.log(index);
 
-                    await page.waitForSelector('#apex_dialog_1', { timeout: 3000 });
-                    
-                    const frameHandle = await page.waitForSelector('#apex_dialog_1 > iframe');
+                    await page.waitForSelector(`#apex_dialog_${index}`, { timeout: 3000 });
+                    const frameHandle = await page.waitForSelector(`#apex_dialog_${index} > iframe`);
                     const frame = await frameHandle.contentFrame();
                     
                     const textContent = await frame.evaluate(() => {
