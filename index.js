@@ -84,7 +84,7 @@ async function scrapeTransactionDetails(url) {
                         if (spanElement) {
                             const parentElement = spanElement.parentElement;
                             return parentElement ? parentElement.textContent.trim() : null;
-                        }#report_7461900984040226668_catch > dl > dd:nth-child(2) > b
+                        }
                         return null;
                     });
 
