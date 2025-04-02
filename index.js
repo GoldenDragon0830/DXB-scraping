@@ -73,26 +73,16 @@ async function scrapeTransactionDetails(url) {
                 detailCount += detailButtons.length;
                 for(let i=0; i<detailButtons.length ; i++) {
                     await detailButtons[i].click();
-                    await waitForTimeout(5000);
+                    await waitForTimeout(2000);
                     index++;
                     console.log(index);
 
-                    await page.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', {timeout: 30000});
-
                     const textContent = await page.evaluate(() => {
-                        const spanElement = document.querySelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b');
-                        if (spanElement) {
-                            const parentElement = spanElement.parentElement;
-                            return parentElement ? parentElement.textContent.trim() : null;
-                        }
-                        return null;
+                        const element = document.querySelector('b > span.fa-map-marker-o + span');
+                        return element ? element.parentNode.textContent.trim() : null;
                     });
 
-                    if (textContent) {
-                        console.log('Extracted text:', textContent);
-                    } else {
-                        console.log('Element not found or text not extracted.');
-                    }
+                    console.log(textContent);
 
                     await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
                     await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
