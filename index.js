@@ -73,7 +73,7 @@ async function scrapeTransactionDetails(url) {
                 detailCount += detailButtons.length;
                 for(let i=0; i<detailButtons.length ; i++) {
                     await detailButtons[i].click();
-                    await waitForTimeout(1000);
+                    await waitForTimeout(2000);
                     index++;
                     console.log(index);
 
