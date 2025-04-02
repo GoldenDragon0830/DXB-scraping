@@ -73,7 +73,7 @@ async function scrapeTransactionDetails(url) {
                 detailCount += detailButtons.length;
                 for(let i=0; i<detailButtons.length ; i++) {
                     await detailButtons[i].click();
-                    await waitForTimeout(2000);
+                    await waitForTimeout(5000);
                     index++;
                     console.log(index);
 
@@ -84,7 +84,7 @@ async function scrapeTransactionDetails(url) {
                         if (spanElement) {
                             const parentElement = spanElement.parentElement;
                             return parentElement ? parentElement.textContent.trim() : null;
-                        }
+                        }#report_7461900984040226668_catch > dl > dd:nth-child(2) > b
                         return null;
                     });
 
