@@ -78,8 +78,8 @@ async function scrapeTransactionDetails(url) {
                     console.log(index);
 
                     const textContent = await page.evaluate(() => {
-                        const element = document.querySelector('#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b');
-                        return element ? element.parentElement.textContent.trim() : null;
+                        const element = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b");
+                        return element ? element.textContent.trim() : null;
                     });
 
                     console.log(textContent);
