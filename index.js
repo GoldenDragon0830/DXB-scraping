@@ -77,10 +77,10 @@ async function scrapeTransactionDetails(url) {
                     index++;
                     console.log(index);
 
-                    await page.waitForSelector('b .fa-map-marker-o', {timeout: 30000});
+                    await page.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', {timeout: 30000});
 
                     const textContent = await page.evaluate(() => {
-                        const spanElement = document.querySelector('b .fa-map-marker-o');
+                        const spanElement = document.querySelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b');
                         if (spanElement) {
                             const parentElement = spanElement.parentElement;
                             return parentElement ? parentElement.textContent.trim() : null;
