@@ -77,6 +77,8 @@ async function scrapeTransactionDetails(url) {
                     index++;
                     console.log(index);
 
+                    await page.waitForSelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b", { visible: true });
+
                     const textContent = await page.evaluate(() => {
                         const element = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b");
                         return element ? element.innerText.trim() : null;
@@ -84,8 +86,8 @@ async function scrapeTransactionDetails(url) {
             
                     console.log(textContent);
 
-                    await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
-                    await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
+                    // await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
+                    // await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
                 }
             }
 
