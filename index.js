@@ -76,10 +76,8 @@ async function scrapeTransactionDetails(url) {
                     await waitForTimeout(2000);
                     index++;
                     console.log(index);
-
+                    
                     let location;
-
-                    await page.waitForSelector('b .fa-map-marker-o', {timeout: 30000});
                     location = document.querySelector('b .fa-map-marker-o').parentElement.textContent.trim();
 
                     console.log(location);
