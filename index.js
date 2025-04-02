@@ -79,9 +79,8 @@ async function scrapeTransactionDetails(url) {
 
                     let location;
 
-                    await page.evaluate(async () => {
-                        await page.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', {timeout: 3000});
-                        location = document.querySelector('b .fa-map-marker-o').parentElement.textContent.trim();
+                    await page.evaluate(() => {
+                        location = document.querySelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b').parentElement.textContent.trim();
                         console.log(location);
                     });
 
