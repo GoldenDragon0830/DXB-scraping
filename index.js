@@ -73,10 +73,11 @@ async function scrapeTransactionDetails(url) {
                 detailCount += detailButtons.length;
                 for(let i=0; i<detailButtons.length ; i++) {
                     await detailButtons[i].click();
-                    await waitForTimeout(2000);
+                    await waitForTimeout(3000);
                     index++;
                     console.log(index);
-                    await page.waitForSelector('#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable', { visible: true });
+
+                    await page.waitForSelector('#apex_dialog_1 > iframe', { visible: true });
                     
                     const frameHandle = await page.waitForSelector('#apex_dialog_1 > iframe');
                     const frame = await frameHandle.contentFrame();
@@ -88,8 +89,8 @@ async function scrapeTransactionDetails(url) {
             
                     console.log(textContent);
 
-                    // await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
-                    // await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
+                    await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
+                    await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
                 }
             }
 
