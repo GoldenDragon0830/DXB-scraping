@@ -1,6 +1,7 @@
 const { timeout } = require('puppeteer');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 puppeteer.use(StealthPlugin());
 
@@ -22,6 +23,8 @@ async function scrapeTransactionDetails(url) {
             `--proxy-server=${proxyServer}`
         ]
     });
+
+    const allDetails = [];
 
     try {
         const page = await browser.newPage();
@@ -77,16 +80,56 @@ async function scrapeTransactionDetails(url) {
                     index++;
                     console.log(index);
 
-                    await page.waitForSelector(`#apex_dialog_${index}`, { timeout: 3000 });
-                    const frameHandle = await page.waitForSelector(`#apex_dialog_${index} > iframe`);
-                    const frame = await frameHandle.contentFrame();
-                    
-                    const textContent = await frame.evaluate(() => {
-                        const element = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b");
-                        return element ? element.innerText.trim() : null;
+                    await page.waitForSelector(`#apex_dialog_${index}`, { visible: true });
+                    let frameHandle = await page.waitForSelector(`#apex_dialog_${index} > iframe`, {timeout: 3000});
+                    let frame = await frameHandle.contentFrame();
+
+                    await frame.waitForSelector('#R2456939146277048660 > a-dynamic-content > div > div > div > h1', { timeout: 3000 });
+
+                    let content = await frame.evaluate(() => {
+
+                        const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
+                        const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
+
+                        const priceUnitElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1 > sub");
+                        const priceUnit =  priceUnitElement ? priceUnitElement.innerText.trim() : null;
+
+                        const dateElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > div > div:nth-child(2)");
+                        const date =  dateElement ? dateElement.innerText.trim() : null;
+
+                        const addressElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(2) > b");
+                        const address =  addressElement ? addressElement.innerText.trim() : null;
+
+                        const bedElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(6) > b");
+                        const bedroom =  bedElement ? bedElement.innerText.trim() : null;
+
+                        const categoryElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(8) > b");
+                        const category =  categoryElement ? categoryElement.innerText.trim() : null;
+
+                        const sizeElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(10) > b");
+                        const unitSize =  sizeElement ? sizeElement.innerText.trim() : null;
+
+                        const prevPriceElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(12) > b");
+                        const prevPrice =  prevPriceElement ? prevPriceElement.innerText.trim() : null;
+
+                        const statusElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(14) > b");
+                        const status =  statusElement ? statusElement.innerText.trim() : null;
+
+                        const soldByElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(16) > b");
+                        const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
+
+                        const grossRentalElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(18) > b");
+                        const grossRental =  grossRentalElement ? grossRentalElement.innerText.trim() : null;
+
+                        const lastRentalAmountElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(20) > b");
+                        const lastRentalAmount =  lastRentalAmountElement ? lastRentalAmountElement.innerText.trim() : null;
+
+                        return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount};
+
                     });
-            
-                    console.log(textContent);
+
+                    console.log(content);
+                    allDetails.push(content);
 
                     await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
                     await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
@@ -105,12 +148,37 @@ async function scrapeTransactionDetails(url) {
 
         console.log('Total detail => ', detailCount);
 
+        await writeToCSV(allDetails);
+
     } catch (error) {
         console.error('Error during scraping:', error);
     } finally {
         // await browser.close();
         console.log('Browser closed');
     }
+}
+
+async function writeToCSV(data) {
+    const csvWriter = createCsvWriter({
+        path: 'transaction-details.csv',
+        header: [
+            { id: 'soldPrice', title: 'Sold Price' },
+            { id: 'priceUnit', title: 'Price Unit' },
+            { id: 'date', title: 'Date' },
+            { id: 'address', title: 'Address' },
+            { id: 'bedroom', title: 'Bedroom' },
+            { id: 'category', title: 'Category' },
+            { id: 'unitSize', title: 'Unit Size' },
+            { id: 'prevPrice', title: 'Previous Price' },
+            { id: 'status', title: 'Status' },
+            { id: 'soldBy', title: 'Sold By' },
+            { id: 'grossRental', title: 'Gross Rental' },
+            { id: 'lastRentalAmount', title: 'Last Rental Amount' },
+        ]
+    });
+
+    await csvWriter.writeRecords(data);
+    console.log('Data successfully written to CSV file');
 }
 
 
