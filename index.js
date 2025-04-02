@@ -78,7 +78,7 @@ async function scrapeTransactionDetails(url) {
                     console.log(index);
 
                     const textContent = await page.evaluate(() => {
-                        const element = document.querySelector('b > span.fa-map-marker-o + span');
+                        const element = document.querySelector('#R2456939146277048660 > a-dynamic-content > div > div > div > h2 > b');
                         return element ? element.parentNode.textContent.trim() : null;
                     });
 
