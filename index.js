@@ -59,7 +59,7 @@ async function scrapeTransactionDetails(url) {
         await waitForTimeout(2000);
         
         await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-        await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
+        await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
 
         await waitForTimeout(2000);
 
@@ -67,7 +67,21 @@ async function scrapeTransactionDetails(url) {
 
         let index = 0;
 
+        let pageNum = 0;
+
         do{
+            // pageNum++;
+            // if(pageNum < 20) {
+            //     const nextButton = await page.$$('a#soldhistorynext');
+            //     if(nextButton.length > 0)
+            //         nextButton[0].click();
+            //     else
+            //         break;
+
+            //     await waitForTimeout(2000);
+            //     continue;
+            // }
+
             const detailButtons = await page.$$('a.t-Button--iconRight');
 
             console.log('Row count => ', detailButtons.length);
@@ -124,7 +138,32 @@ async function scrapeTransactionDetails(url) {
                         const lastRentalAmountElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(20) > b");
                         const lastRentalAmount =  lastRentalAmountElement ? lastRentalAmountElement.innerText.trim() : null;
 
-                        return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount};
+
+                        const ulElement = document.querySelector('#PropSaleHistory_cards');
+                        let liElements;
+                        let prevTransactions = [];
+
+                        if (ulElement) {
+                            liElements = ulElement.querySelectorAll('li'); 
+
+                            for (let j=0; j<liElements.length; j++) {
+                                const soldDateElement = liElements[j].querySelector("h5.margin-none");
+                                const soldDate =  soldDateElement ? soldDateElement.innerText.trim() : null;
+
+                                const soldByElement = liElements[j].querySelector("span.u-color-11-text");
+                                const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
+
+                                const soldPriceElement = liElements[j].querySelector("h4.margin-none > span");
+                                const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
+
+                                const unitSizeElement = liElements[j].querySelector("p.u-color-11-text");
+                                const unitSize =  unitSizeElement ? unitSizeElement.innerText.trim() : null;
+
+                                prevTransactions.push({soldDate, soldBy, soldPrice, unitSize});
+                            }
+                        }
+
+                        return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevTransactions};
 
                     });
 
@@ -148,7 +187,7 @@ async function scrapeTransactionDetails(url) {
 
         console.log('Total detail => ', detailCount);
 
-        await writeToCSV(allDetails);
+        // await writeToCSV(allDetails);
 
     } catch (error) {
         console.error('Error during scraping:', error);
@@ -180,7 +219,6 @@ async function writeToCSV(data) {
     await csvWriter.writeRecords(data);
     console.log('Data successfully written to CSV file');
 }
-
 
 const targetUrl = 'https://dxbinteract.com/dubai-house-prices/';
 
