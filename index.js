@@ -224,6 +224,10 @@ async function scrapeTransactionDetails(url) {
     
                 await waitForTimeout(2000);
             }while(1);
+
+            await prisma.transaction.createMany({
+                data: allDetails
+            });
     
             // await writeToCSV(allDetails);
         }
