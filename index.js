@@ -207,7 +207,7 @@ async function scrapeTransactionDetails(url) {
     
                         });
     
-                        // console.log(content);
+                        console.log(content);
                         allDetails.push({...content, district: districts[k]});
     
                         await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
