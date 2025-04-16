@@ -122,7 +122,7 @@ async function scrapeTransactionDetails(url) {
             await waitForTimeout(2000);
             
             await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-            await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
+            await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
     
             await waitForTimeout(2000);
     
@@ -142,7 +142,7 @@ async function scrapeTransactionDetails(url) {
                 //     await waitForTimeout(2000);
                 //     continue;
                 // }
-    
+
                 const detailButtons = await page.$$('a.t-Button--iconRight');
     
                 // console.log('Row count => ', detailButtons.length);
@@ -156,6 +156,9 @@ async function scrapeTransactionDetails(url) {
                         dlg_index++;
                         console.log(index);
     
+                        if(index > 2)
+                            break;
+                        
                         await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
                         let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
                         let frame = await frameHandle.contentFrame();
