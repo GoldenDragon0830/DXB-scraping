@@ -104,7 +104,7 @@ async function scrapeTransactionDetails(url) {
             await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
             await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
     
-            await waitForTimeout(2000);
+            await waitForTimeout(3000);
     
             let detailCount = 0;
             let pageNum = 0;
