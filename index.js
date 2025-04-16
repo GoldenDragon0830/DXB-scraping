@@ -66,8 +66,8 @@ async function scrapeTransactionDetails(url) {
 
         
 
-        await page.waitForSelector("#10317280017537774320 > li:nth-child(2) > a", {timeout: 30000});
-        await page.click('#10317280017537774320 > li:nth-child(2) > a');
+        await page.waitForSelector("li:nth-child(2) > a.t-Button--navBar", {timeout: 30000});
+        await page.click('li:nth-child(2) > a.t-Button--navBar');
 
         const districts = [
             "Jumeirah Lakes Towers"
