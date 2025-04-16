@@ -158,7 +158,7 @@ async function scrapeTransactionDetails(url) {
     
                         if(index > 2)
                             break;
-                        
+
                         await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
                         let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
                         let frame = await frameHandle.contentFrame();
@@ -231,6 +231,8 @@ async function scrapeTransactionDetails(url) {
                             return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
     
                         });
+
+                        console.log(content);
     
                         // allDetails.push({...content, district: districts[k]});
 
