@@ -62,6 +62,13 @@ async function scrapeTransactionDetails(url) {
             timeout: 60000,
         });
 
+        await waitForTimeout(3000);
+
+        
+
+        await page.waitForSelector("#10317280017537774320 > li:nth-child(2) > a", {timeout: 30000});
+        await page.click('#10317280017537774320 > li:nth-child(2) > a');
+
         const districts = [
             "Jumeirah Lakes Towers"
             // "Downtown Dubai",
@@ -102,9 +109,9 @@ async function scrapeTransactionDetails(url) {
             await waitForTimeout(2000);
             
             await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-            await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
+            await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
     
-            await waitForTimeout(3000);
+            await waitForTimeout(2000);
     
             let detailCount = 0;
             let pageNum = 0;
