@@ -264,7 +264,7 @@ async function scrapeTransactionDetails(url) {
     } catch (error) {
         console.error('Error during scraping:', error);
     } finally {
-        await browser.close();
+        // await browser.close();
         console.log('Browser closed');
     }
 }
