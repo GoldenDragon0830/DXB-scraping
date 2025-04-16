@@ -63,22 +63,24 @@ async function scrapeTransactionDetails(url) {
         });
 
         const districts = [
-            "Jumeirah Lakes Towers",
-            "Downtown Dubai",
-            "Business Bay",
-            "Dubai Marina, Marsa Dubai",
-            "Bluewaters Island",
-            "Jumeirah Village Circle (JVC) ",
-            "Sobha Hartland 2, Bukadra",
-            "Sobha One, Ras Al Khor Industrial First",
-            "Dubai Creek Harbour",
-            "Emaar Beachfront (all buildings)",
-            "Dubai Land, Wadi Al Safa 4",
-            "Arjan, Al Barshaa South Third",
-            "Dubai South Residential District, Madinat Al Mataar",
+            "Jumeirah Lakes Towers"
+            // "Downtown Dubai",
+            // "Business Bay",
+            // "Dubai Marina, Marsa Dubai",
+            // "Bluewaters Island",
+            // "Jumeirah Village Circle (JVC) ",
+            // "Sobha Hartland 2, Bukadra",
+            // "Sobha One, Ras Al Khor Industrial First",
+            // "Dubai Creek Harbour",
+            // "Emaar Beachfront (all buildings)",
+            // "Dubai Land, Wadi Al Safa 4",
+            // "Arjan, Al Barshaa South Third",
+            // "Dubai South Residential District, Madinat Al Mataar",
         ]
 
         let dlg_index = 0;
+
+        let id = -10000;
 
 
         for(let k=0; k<districts.length; k++) {
@@ -100,7 +102,7 @@ async function scrapeTransactionDetails(url) {
             await waitForTimeout(2000);
             
             await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-            await page.click('#R7990151324798006877 > div > ul > li:nth-child(7)');
+            await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
     
             await waitForTimeout(2000);
     
@@ -207,8 +209,33 @@ async function scrapeTransactionDetails(url) {
     
                         });
     
-                        console.log(content);
-                        allDetails.push({...content, district: districts[k]});
+                        // console.log(content);
+                        // allDetails.push({...content, district: districts[k]});
+
+                        id = id-1;
+
+                        let transaction = {
+                            platform: "dxb",
+                            id: id,
+                            ownerID: id,
+                            userExternalID: id.toString(),
+                            sourceID: id,
+                            state: content.status,
+                            purpose: "for-sale",
+                            price: Number(content.prevTransactions[0].soldPrice.split(' ')[1].replace(/,/g, '')),
+                            externalID: id.toString(),
+                            location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
+                            dxb_category: content.category,
+                            dxb_bedroom: content.bedroom,
+                            dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
+                            dxb_transaction: content.prevTransactions,
+                            type: "transaction",
+                            createdAt: moment(Date.now()).toDate(),
+                            updatedAt: moment(Date.now()).toDate(),
+                            reactivatedAt: moment(Date.now()).toDate()
+                        }
+
+                        allDetails.push(transaction);
     
                         await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
                         await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
@@ -225,7 +252,7 @@ async function scrapeTransactionDetails(url) {
                 await waitForTimeout(2000);
             }while(1);
 
-            await prisma.transaction.createMany({
+            await prisma.property.createMany({
                 data: allDetails
             });
     
