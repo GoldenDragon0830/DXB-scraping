@@ -228,7 +228,6 @@ async function scrapeTransactionDetails(url) {
     
                         });
     
-                        console.log(content);
                         // allDetails.push({...content, district: districts[k]});
 
                         id = id-1;
@@ -241,13 +240,13 @@ async function scrapeTransactionDetails(url) {
                             sourceID: id,
                             state: content.status,
                             purpose: "for-sale",
-                            price: Number(content.prevTransactions[0].soldPrice.split(' ')[1].replace(/,/g, '')),
+                            price: Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, '')),
                             externalID: id.toString(),
                             location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
                             dxb_category: content.category,
                             dxb_bedroom: content.bedroom,
                             dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
-                            dxb_transaction: content.prevTransactions,
+                            dxb_transaction: content.prevSales,
                             type: "transaction",
                             createdAt: moment(Date.now()).toDate(),
                             updatedAt: moment(Date.now()).toDate(),
