@@ -64,10 +64,19 @@ async function scrapeTransactionDetails(url) {
 
         await waitForTimeout(3000);
 
-        
-
         await page.waitForSelector("li:nth-child(2) > a.t-Button--navBar", {timeout: 30000});
         await page.click('li:nth-child(2) > a.t-Button--navBar');
+
+        await waitForTimeout(3000);
+
+        await page.waitForSelector("#P1001_LOGIN_EMAIL", {timeout: 30000});
+        await page.type('#P1001_LOGIN_EMAIL', "elite07dev@gmail.com");
+
+        await page.waitForSelector("#P1001_LOGIN_PASSWORD", {timeout: 30000});
+        await page.type('#P1001_LOGIN_PASSWORD', "QWE!@#qwe123");
+
+        await page.waitForSelector("#B5785800721449667599", {timeout: 30000});
+        await page.click('#B5785800721449667599');
 
         const districts = [
             "Jumeirah Lakes Towers"
