@@ -146,8 +146,6 @@ async function scrapeTransactionDetails(url) {
     
                 // console.log('Row count => ', detailButtons.length);
 
-                console.log(detailButtons.length);
-        
                 if (detailButtons.length > 0) {
                     detailCount += detailButtons.length;
                     for(let i=0; i<detailButtons.length ; i++) {
@@ -230,7 +228,7 @@ async function scrapeTransactionDetails(url) {
     
                         });
     
-                        // console.log(content);
+                        console.log(content);
                         // allDetails.push({...content, district: districts[k]});
 
                         id = id-1;
