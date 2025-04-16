@@ -69,14 +69,17 @@ async function scrapeTransactionDetails(url) {
 
         await waitForTimeout(3000);
 
-        await page.waitForSelector("#P1001_LOGIN_EMAIL", {timeout: 30000});
-        await page.type('#P1001_LOGIN_EMAIL', "elite07dev@gmail.com");
+        let frameHandle = await page.waitForSelector(`#apex_dialog_1 > iframe`, {timeout: 3000});
+        let frame = await frameHandle.contentFrame();
 
-        await page.waitForSelector("#P1001_LOGIN_PASSWORD", {timeout: 30000});
-        await page.type('#P1001_LOGIN_PASSWORD', "QWE!@#qwe123");
+        await frame.waitForSelector("#P1001_LOGIN_EMAIL", {timeout: 30000});
+        await frame.type('#P1001_LOGIN_EMAIL', "elite07dev@gmail.com");
 
-        await page.waitForSelector("#B5785800721449667599", {timeout: 30000});
-        await page.click('#B5785800721449667599');
+        await frame.waitForSelector("#P1001_LOGIN_PASSWORD", {timeout: 30000});
+        await frame.type('#P1001_LOGIN_PASSWORD', "QWE!@#qwe123");
+
+        await frame.waitForSelector("#B5785800721449667599", {timeout: 30000});
+        await frame.click('#B5785800721449667599');
 
         const districts = [
             "Jumeirah Lakes Towers"
