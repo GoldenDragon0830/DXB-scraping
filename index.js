@@ -126,6 +126,8 @@ async function scrapeTransactionDetails(url) {
                 const detailButtons = await page.$$('a.t-Button--iconRight');
     
                 // console.log('Row count => ', detailButtons.length);
+
+                console.log(detailButtons.length);
         
                 if (detailButtons.length > 0) {
                     detailCount += detailButtons.length;
