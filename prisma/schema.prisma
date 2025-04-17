@@ -109,7 +109,7 @@ model Property {
 model PropertyDetail {
   uid              Int       @id @default(autoincrement())
   id               Int?      @unique
-  objectID         Int?
+  objectID         Int?4
   ownerID          Int?
   userExternalID   String?
   sourceID         Int?

@@ -265,9 +265,9 @@ async function scrapeTransactionDetails(url) {
                             dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
                             dxb_transaction: content.prevSales,
                             type: "transaction",
-                            createdAt: moment(Date.now()).toDate(),
-                            updatedAt: moment(Date.now()).toDate(),
-                            reactivatedAt: moment(Date.now()).toDate()
+                            created_at: moment(Date.now()).toDate(),
+                            updated_at: moment(Date.now()).toDate(),
+                            reactivated_at: moment(Date.now()).toDate()
                         }
 
                         allDetails.push(transaction);
