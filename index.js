@@ -238,6 +238,21 @@ async function scrapeTransactionDetails(url) {
 
                         id = id-1;
 
+                        let price;
+
+                        if (content.prevSales.length) {
+                            price = Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, ''));
+                        } else {
+                            let soldPrice = content.soldPrice.slice(0, soldPrice.length-3);
+
+                            if (soldPrice[soldPrice.length-1] == 'M')
+                                price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000000;
+                            else if (soldPrice[soldPrice.length-1] == 'K')
+                                price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000;
+                            else
+                                price = Number(soldPrice);
+                        }
+
                         let transaction = {
                             platform: "dxb",
                             id: id,
@@ -246,7 +261,7 @@ async function scrapeTransactionDetails(url) {
                             sourceID: id,
                             state: content.status,
                             purpose: "for-sale",
-                            price: Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, '')),
+                            price: price,
                             externalID: id.toString(),
                             location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
                             dxb_category: content.category,
