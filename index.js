@@ -83,14 +83,14 @@ async function scrapeTransactionDetails(url) {
         await frame.click('#B5785800721449667599');
 
         const districts = [
-            "Jumeirah Lakes Towers",
-            "Downtown Dubai",
-            "Business Bay",
-            "Dubai Marina, Marsa Dubai",
-            "Bluewaters Island",
-            "Jumeirah Village Circle (JVC) ",
-            "Sobha Hartland 2, Bukadra",
-            "Sobha One, Ras Al Khor Industrial First",
+            // "Jumeirah Lakes Towers",
+            // "Downtown Dubai",
+            // "Business Bay",
+            // "Dubai Marina, Marsa Dubai",
+            // "Bluewaters Island",
+            // "Jumeirah Village Circle (JVC) ",
+            // "Sobha Hartland 2, Bukadra",
+            // "Sobha One, Ras Al Khor Industrial First",
             "Dubai Creek Harbour",
             "Emaar Beachfront (all buildings)",
             "Dubai Land, Wadi Al Safa 4",
@@ -100,7 +100,7 @@ async function scrapeTransactionDetails(url) {
 
         let dlg_index = 0;
 
-        let id = -10000;
+        let id = -12111;
 
 
         for(let k=0; k<districts.length; k++) {
@@ -160,7 +160,7 @@ async function scrapeTransactionDetails(url) {
                         let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
                         let frame = await frameHandle.contentFrame();
     
-                        await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
+                        // await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
                         await waitForTimeout(1000);
     
                         let content = await frame.evaluate(async () => {
