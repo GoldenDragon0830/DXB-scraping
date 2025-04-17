@@ -161,11 +161,9 @@ async function scrapeTransactionDetails(url) {
                         let frame = await frameHandle.contentFrame();
     
                         await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
-
+                        await waitForTimeout(1000);
     
                         let content = await frame.evaluate(async () => {
-
-                            await waitForTimeout(1000);
                             
                             const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
                             const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
