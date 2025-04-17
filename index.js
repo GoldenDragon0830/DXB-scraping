@@ -83,14 +83,14 @@ async function scrapeTransactionDetails(url) {
         await frame.click('#B5785800721449667599');
 
         const districts = [
-            // "Jumeirah Lakes Towers",
-            // "Downtown Dubai",
-            // "Business Bay",
-            // "Dubai Marina, Marsa Dubai",
-            // "Bluewaters Island",
-            // "Jumeirah Village Circle (JVC) ",
-            // "Sobha Hartland 2, Bukadra",
-            // "Sobha One, Ras Al Khor Industrial First",
+            "Jumeirah Lakes Towers",
+            "Downtown Dubai",
+            "Business Bay",
+            "Dubai Marina, Marsa Dubai",
+            "Bluewaters Island",
+            "Jumeirah Village Circle (JVC) ",
+            "Sobha Hartland 2, Bukadra",
+            "Sobha One, Ras Al Khor Industrial First",
             "Dubai Creek Harbour",
             "Emaar Beachfront (all buildings)",
             "Dubai Land, Wadi Al Safa 4",
@@ -100,8 +100,15 @@ async function scrapeTransactionDetails(url) {
 
         let dlg_index = 0;
 
-        let id = -12111;
+        const row = await prisma.property.findFirst({
+            orderBy: {
+              id: 'asc',
+            },
+          });
 
+        let id = row.id;
+
+        console.log('============id===========', id);
 
         for(let k=0; k<districts.length; k++) {
             console.log(districts[k]);
