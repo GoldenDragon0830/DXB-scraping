@@ -243,7 +243,7 @@ async function scrapeTransactionDetails(url) {
                         if (content.prevSales.length) {
                             price = Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, ''));
                         } else {
-                            let soldPrice = content.soldPrice.slice(0, soldPrice.length-3);
+                            let soldPrice = content.soldPrice.slice(0, content.soldPrice.length-3);
 
                             if (soldPrice[soldPrice.length-1] == 'M')
                                 price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000000;
