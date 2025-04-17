@@ -99,6 +99,11 @@ model Property {
   verification     Json?
   videoCount       Int?
   photoIDs         Int[]
+  platform         String?
+  dxb_category     String?
+  dxb_bedroom      String?
+  dxb_unitsize     Int?
+  dxb_transaction  Json?
 }
 
 model PropertyDetail {
