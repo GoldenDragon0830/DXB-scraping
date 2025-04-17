@@ -160,10 +160,13 @@ async function scrapeTransactionDetails(url) {
                         let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
                         let frame = await frameHandle.contentFrame();
     
-                        await frame.waitForSelector('#R2456939146277048660 > a-dynamic-content > div > div > div > h1', { timeout: 3000 });
+                        await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
+
     
-                        let content = await frame.evaluate(() => {
-    
+                        let content = await frame.evaluate(async () => {
+
+                            await waitForTimeout(1000);
+                            
                             const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
                             const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
     
