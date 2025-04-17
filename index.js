@@ -229,6 +229,8 @@ async function scrapeTransactionDetails(url) {
     
                         });
 
+                        console.log(content);
+
                         id = id-1;
 
                         let price;
