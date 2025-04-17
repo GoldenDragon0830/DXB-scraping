@@ -144,6 +144,9 @@ async function scrapeTransactionDetails(url) {
                 // }
 
                 const detailButtons = await page.$$('a.t-Button--iconRight');
+
+                if(index>0)
+                    break;
     
                 // console.log('Row count => ', detailButtons.length);
 
@@ -155,9 +158,6 @@ async function scrapeTransactionDetails(url) {
                         index++;
                         dlg_index++;
                         console.log(index);
-    
-                        if(index > 2)
-                            break;
 
                         await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
                         let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
@@ -231,10 +231,6 @@ async function scrapeTransactionDetails(url) {
                             return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
     
                         });
-
-                        console.log(content);
-    
-                        // allDetails.push({...content, district: districts[k]});
 
                         id = id-1;
 
