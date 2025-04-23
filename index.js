@@ -100,11 +100,11 @@ async function scrapeTransactionDetails(url) {
 
         let dlg_index = 0;
 
-        const row = await prisma.property.findFirst({
-            orderBy: {
-              id: 'asc',
-            },
-          });
+        // const row = await prisma.property.findFirst({
+        //     orderBy: {
+        //       id: 'asc',
+        //     },
+        //   });
 
         // let id = row.id;
         let id = -10000;
