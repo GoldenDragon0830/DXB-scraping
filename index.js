@@ -100,11 +100,11 @@ async function scrapeTransactionDetails(url) {
 
         let dlg_index = 0;
 
-        // const row = await prisma.property.findFirst({
-        //     orderBy: {
-        //       id: 'asc',
-        //     },
-        //   });
+        const row = await prisma.Property.findFirst({
+            orderBy: {
+              id: 'asc',
+            },
+          });
 
         // let id = row.id;
         let id = -10000;
@@ -299,7 +299,7 @@ async function scrapeTransactionDetails(url) {
                 await waitForTimeout(2000);
             }while(1);
 
-            await prisma.property.createMany({
+            await prisma.Property.createMany({
                 data: allDetails
             });
     
