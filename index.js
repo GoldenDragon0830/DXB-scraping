@@ -167,7 +167,7 @@ async function scrapeTransactionDetails(url) {
                         let frame = await frameHandle.contentFrame();
     
                         // await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
-                        await waitForTimeout(1000);
+                        await waitForTimeout(2000);
     
                         let content = await frame.evaluate(async () => {
                             
