@@ -84,12 +84,12 @@ async function scrapeTransactionDetails(url) {
 
         const districts = [
             // "Jumeirah Lakes Towers",
-            "Downtown Dubai",
-            "Business Bay",
-            "Dubai Marina, Marsa Dubai",
-            "Bluewaters Island",
-            "Jumeirah Village Circle (JVC) ",
-            "Sobha Hartland 2, Bukadra",
+            // "Downtown Dubai",
+            // "Business Bay",
+            // "Dubai Marina, Marsa Dubai",
+            // "Bluewaters Island",
+            // "Jumeirah Village Circle (JVC) ",
+            // "Sobha Hartland 2, Bukadra",
             "Sobha One, Ras Al Khor Industrial First",
             "Dubai Creek Harbour",
             "Emaar Beachfront (all buildings)",
