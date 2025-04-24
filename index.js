@@ -94,7 +94,7 @@ async function scrapeTransactionDetails(url) {
             // "Dubai Creek Harbour",
             // "Emaar Beachfront (all buildings)",
             // "Dubai Land, Wadi Al Safa 4",
-            "Arjan, Al Barshaa South Third",
+            // "Arjan, Al Barshaa South Third",
             "Dubai South Residential District, Madinat Al Mataar"
         ]
 
