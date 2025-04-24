@@ -106,8 +106,8 @@ async function scrapeTransactionDetails(url) {
             },
           });
 
-        // let id = row.id;
-        let id = -10000;
+        let id = row.id;
+        // let id = -10000;
 
         for(let k=0; k<districts.length; k++) {
             console.log(districts[k]);
