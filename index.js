@@ -90,10 +90,10 @@ async function scrapeTransactionDetails(url) {
             // "Bluewaters Island",
             // "Jumeirah Village Circle (JVC) ",
             // "Sobha Hartland 2, Bukadra",
-            "Sobha One, Ras Al Khor Industrial First",
-            "Dubai Creek Harbour",
-            "Emaar Beachfront (all buildings)",
-            "Dubai Land, Wadi Al Safa 4",
+            // "Sobha One, Ras Al Khor Industrial First",
+            // "Dubai Creek Harbour",
+            // "Emaar Beachfront (all buildings)",
+            // "Dubai Land, Wadi Al Safa 4",
             "Arjan, Al Barshaa South Third",
             "Dubai South Residential District, Madinat Al Mataar"
         ]
