@@ -56,7 +56,6 @@ model Investment {
   updated_by       Int?
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Property {
   id                   Int?
   area                 Float?
@@ -88,7 +87,7 @@ model Property {
   title_l2             String?
   title_l3             String?
   type                 String?
-  uid                  Int       @default(autoincrement())
+  uid                  Int       @id @default(autoincrement())
   updated_at           DateTime?
   updated_by           Int?
   userExternalID       String?
@@ -111,8 +110,7 @@ model Property {
   dxb_grossRental      String?
   dxb_address          String?
   dxb_lastRentalAmount String?
-
-  @@ignore
+  dxb_soldBy           String?
 }
 
 model PropertyDetail {
