@@ -88,7 +88,7 @@ model Property {
   title_l2             String?
   title_l3             String?
   type                 String?
-  uid                  Int       @default(autoincrement())
+  uid                  Int       @id @default(autoincrement())
   updated_at           DateTime?
   updated_by           Int?
   userExternalID       String?
@@ -111,6 +111,7 @@ model Property {
   dxb_grossRental      String?
   dxb_address          String?
   dxb_lastRentalAmount String?
+  dxb_soldBy           String?
 
   @@ignore
 }
