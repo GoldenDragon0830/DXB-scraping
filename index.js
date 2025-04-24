@@ -83,7 +83,7 @@ async function scrapeTransactionDetails(url) {
         await frame.click('#B5785800721449667599');
 
         const districts = [
-            "Jumeirah Lakes Towers",
+            // "Jumeirah Lakes Towers",
             "Downtown Dubai",
             "Business Bay",
             "Dubai Marina, Marsa Dubai",
