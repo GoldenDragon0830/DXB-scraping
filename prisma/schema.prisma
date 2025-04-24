@@ -6,3 +6,175 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Investment {
+  uid              Int       @id @default(autoincrement())
+  id               Int?      @unique
+  user_id          String?
+  externalID       String?
+  objectID         Int?
+  ownerID          Int?
+  userExternalID   String?
+  sourceID         Int?
+  state            String?
+  geography        Json?
+  purpose          String?
+  price            Int?
+  product          String?
+  productLabel     String?
+  rentFrequency    String?
+  referenceNumber  String?
+  permitNumber     String?
+  title            String?
+  title_l1         String?
+  title_l2         String?
+  title_l3         String?
+  description      String?
+  description_l1   String?
+  description_l2   String?
+  description_l3   String?
+  location         Json[]
+  category         Json[]
+  rooms            Int?
+  baths            Int?
+  area             Float?
+  coverPhoto       Json?
+  photoCount       Int?
+  photos           Json[]
+  phoneNumber      Json?
+  contactName      String?
+  isVerified       Boolean?
+  occupancyStatus  String?
+  furnishingStatus String?
+  type             String?
+  completionStatus String?
+  agency           Json?
+  reactivated_at   DateTime?
+  created_at       DateTime?
+  updated_at       DateTime?
+  created_by       Int?
+  updated_by       Int?
+}
+
+model Property {
+  id                   Int?
+  area                 Float?
+  baths                Int?
+  category             Json[]
+  completionStatus     String?
+  contactName          String?
+  coverPhoto           Json?
+  created_at           DateTime?
+  created_by           Int?
+  externalID           String?   @unique
+  hash                 String?
+  isVerified           Boolean?
+  keywords             String[]
+  location             Json[]
+  ownerID              Int?
+  phoneNumber          Json?
+  photoCount           Int?
+  price                Int?
+  purpose              String?
+  referenceNumber      String?
+  rentFrequency        String?
+  rooms                Int?
+  slug                 String?
+  sourceID             Int?
+  state                String?
+  title                String?
+  title_l1             String?
+  title_l2             String?
+  title_l3             String?
+  type                 String?
+  uid                  Int       @id @default(autoincrement())
+  updated_at           DateTime?
+  updated_by           Int?
+  userExternalID       String?
+  geography            Json?
+  agency               Json?
+  coverVideo           Json?
+  panoramaCount        Int?
+  reactivated_at       DateTime?
+  verification         Json?
+  videoCount           Int?
+  photoIDs             Int[]
+  platform             String?
+  dxb_category         String?
+  dxb_bedroom          String?
+  dxb_unitsize         Int?
+  dxb_transaction      Json?
+  dxb_soldPrice        String?
+  dxb_soldDate         String?
+  dxb_prevPrice        String?
+  dxb_grossRental      String?
+  dxb_address          String?
+  dxb_lastRentalAmount String?
+  dxb_soldBy           String?
+}
+
+model PropertyDetail {
+  uid              Int       @id @default(autoincrement())
+  id               Int?      @unique
+  objectID         Int?
+  ownerID          Int?
+  userExternalID   String?
+  sourceID         Int?
+  state            String?
+  geography        Json?
+  purpose          String?
+  price            Int?
+  product          String?
+  productLabel     String?
+  rentFrequency    String?
+  referenceNumber  String?
+  permitNumber     String?
+  title            String?
+  title_l1         String?
+  title_l2         String?
+  title_l3         String?
+  description      String?
+  description_l1   String?
+  description_l2   String?
+  description_l3   String?
+  location         Json[]
+  category         Json[]
+  rooms            Int?
+  baths            Int?
+  area             Float?
+  coverPhoto       Json?
+  photoCount       Int?
+  photos           Json[]
+  phoneNumber      Json?
+  contactName      String?
+  isVerified       Boolean?
+  occupancyStatus  String?
+  furnishingStatus String?
+  type             String?
+  completionStatus String?
+  agency           Json?
+  reactivated_at   DateTime?
+  created_at       DateTime?
+  updated_at       DateTime?
+  created_by       Int?
+  updated_by       Int?
+  externalID       String?
+}
+
+model Transaction {
+  id               Int     @id @default(autoincrement())
+  soldPrice        String?
+  priceUnit        String?
+  date             String?
+  address          String?
+  bedroom          String?
+  category         String?
+  unitSize         String?
+  prevPrice        String?
+  status           String?
+  soldBy           String?
+  grossRental      String?
+  lastRentalAmount String?
+  prevSales        Json?
+  district         String?
+}
