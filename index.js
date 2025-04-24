@@ -83,18 +83,18 @@ async function scrapeTransactionDetails(url) {
         await frame.click('#B5785800721449667599');
 
         const districts = [
-            // "Jumeirah Lakes Towers",
-            // "Downtown Dubai",
-            // "Business Bay",
-            // "Dubai Marina, Marsa Dubai",
-            // "Bluewaters Island",
-            // "Jumeirah Village Circle (JVC) ",
-            // "Sobha Hartland 2, Bukadra",
-            // "Sobha One, Ras Al Khor Industrial First",
-            // "Dubai Creek Harbour",
-            // "Emaar Beachfront (all buildings)",
-            // "Dubai Land, Wadi Al Safa 4",
-            // "Arjan, Al Barshaa South Third",
+            "Jumeirah Lakes Towers",
+            "Downtown Dubai",
+            "Business Bay",
+            "Dubai Marina, Marsa Dubai",
+            "Bluewaters Island",
+            "Jumeirah Village Circle (JVC) ",
+            "Sobha Hartland 2, Bukadra",
+            "Sobha One, Ras Al Khor Industrial First",
+            "Dubai Creek Harbour",
+            "Emaar Beachfront (all buildings)",
+            "Dubai Land, Wadi Al Safa 4",
+            "Arjan, Al Barshaa South Third",
             "Dubai South Residential District, Madinat Al Mataar"
         ]
 
