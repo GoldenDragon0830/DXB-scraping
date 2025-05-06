@@ -280,7 +280,7 @@ async function scrapeTransactionDetails(url) {
                             dxb_grossRental: content.grossRental,
                             dxb_address: content.address,
                             dxb_lastRentalAmount: content.lastRentalAmount,
-                            dxb_propNo: Number(content.propNo.slice(4, content.propNo.length)),
+                            dxb_propNo: content.propNo,
                             type: "transaction",
                             created_at: moment(Date.now()).toDate(),
                             updated_at: moment(Date.now()).toDate(),
