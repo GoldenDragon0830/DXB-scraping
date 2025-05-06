@@ -83,7 +83,7 @@ async function scrapeTransactionDetails(url) {
         await frame.click('#B5785800721449667599');
 
         const districts = [
-            "Jumeirah Lakes Towers",
+            // "Jumeirah Lakes Towers",
             "Downtown Dubai",
             "Business Bay",
             "Dubai Marina, Marsa Dubai",
@@ -106,8 +106,8 @@ async function scrapeTransactionDetails(url) {
             },
           });
 
-        // let id = row.id;
-        let id = -10000;
+        let id = row.id;
+        // let id = -10000;
 
         for(let k=0; k<districts.length; k++) {
             console.log(districts[k]);
