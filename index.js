@@ -74,10 +74,10 @@ async function scrapeTransactionDetails(url) {
         let frame = await frameHandle.contentFrame();
 
         await frame.waitForSelector("#P1001_LOGIN_EMAIL", {timeout: 30000});
-        await frame.type('#P1001_LOGIN_EMAIL', "elite07dev@gmail.com");
+        await frame.type('#P1001_LOGIN_EMAIL', "ben@sport-legacy.com");
 
         await frame.waitForSelector("#P1001_LOGIN_PASSWORD", {timeout: 30000});
-        await frame.type('#P1001_LOGIN_PASSWORD', "QWE!@#qwe123");
+        await frame.type('#P1001_LOGIN_PASSWORD', "dxbinteract2623!X");
 
         await frame.waitForSelector("#B5785800721449667599", {timeout: 30000});
         await frame.click('#B5785800721449667599');
@@ -106,8 +106,8 @@ async function scrapeTransactionDetails(url) {
             },
           });
 
-        let id = row.id;
-        // let id = -10000;
+        // let id = row.id;
+        let id = -10000;
 
         for(let k=0; k<districts.length; k++) {
             console.log(districts[k]);
@@ -182,6 +182,9 @@ async function scrapeTransactionDetails(url) {
     
                             const addressElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(2) > b");
                             const address =  addressElement ? addressElement.innerText.trim() : null;
+
+                            const propNoElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(4) > b");
+                            const propNo =  propNoElement ? propNoElement.innerText.trim() : null;
     
                             const bedElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(6) > b");
                             const bedroom =  bedElement ? bedElement.innerText.trim() : null;
@@ -232,7 +235,7 @@ async function scrapeTransactionDetails(url) {
                                 }
                             }
     
-                            return {soldPrice, priceUnit, date, address, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
+                            return {soldPrice, priceUnit, date, address, propNo, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
     
                         });
 
@@ -277,6 +280,7 @@ async function scrapeTransactionDetails(url) {
                             dxb_grossRental: content.grossRental,
                             dxb_address: content.address,
                             dxb_lastRentalAmount: content.lastRentalAmount,
+                            dxb_propNo: Number(content.propNo.slice(4, content.propNo.length)),
                             type: "transaction",
                             created_at: moment(Date.now()).toDate(),
                             updated_at: moment(Date.now()).toDate(),
