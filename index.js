@@ -125,12 +125,19 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
             const spanTextList = spanElement.textContent.trim().split(', ');
             
-            return spanElement ? spanTextList.indexOf(building_name.trim()) : false;
+            return spanElement ? spanTextList.indexOf(building_name.trim()) >= 0 : false;
         }, building_name);
         
-        if(is_correct_building >= 0) {
+        if(is_correct_building) {
             // Click on the first item
             await page.click('#AreasList article:first-child');
+
+            await waitForTimeout(3000);
+
+            await page.waitForSelector('#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)', { timeout: 30000 });
+            const median_price = page.querySelector('#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)').textContent.trim();
+            console.log(median_price)
+
             return;
         }
 
@@ -140,7 +147,33 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
         
         await page.type('#SearchInput', project_name);
 
+         // Wait for search results to appear
         await page.waitForSelector("#AreasList", {timeout: 30000});
+        
+        // Wait a bit for results to fully load
+        await waitForTimeout(1000);
+
+        const is_correct_project = await page.evaluate((project_name) => {
+            const areasList = document.querySelector('#AreasList');
+            if (!areasList) return false;
+            
+            const firstArticle = areasList.querySelector('article:first-child');
+            if (!firstArticle) return false;
+
+            const spanElement = firstArticle.querySelector('span');
+
+            const spanTextList = spanElement.textContent.trim().split(', ');
+            
+            return spanElement ? spanTextList.indexOf(project_name.trim()) >= 0 : false;
+        }, project_name);
+
+        if(is_correct_project) {
+            // Click on the first item
+            await page.click('#AreasList article:first-child');
+            return;
+        }
+
+        return {};
 
     } catch (error) {
         console.error('Error during scraping:', error);
