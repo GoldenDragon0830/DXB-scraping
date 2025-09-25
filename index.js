@@ -138,7 +138,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
     }
 }
 
-app.listen(process.env.PORT, () =>
-    console.log(`Scraping app listening on port ${process.env.PORT}!`)
+app.listen(process.env.PORT || 5001, () =>
+    console.log(`Scraping app listening on port ${rocess.env.PORT || 5001}!`)
 );
   
