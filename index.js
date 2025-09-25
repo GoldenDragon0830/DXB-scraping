@@ -136,7 +136,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
             await page.waitForSelector("#report_7995429268703774766_catch", { timeout: 30000 });
             
-            const result = await page.evaluate(() => {
+            const prop_result = await page.evaluate(() => {
                 const median_price = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
                 const median_price_percent = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(3) > span").textContent.trim();
                 const median_price_sqft = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(2) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
@@ -147,8 +147,10 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
                 return {median_price, median_price_percent, median_price_sqft, median_price_sqft_percent, transactions, transactions_percent, rental_yield};
             });
+
+            conosle.log(prop_result)
             
-            return result;
+            return prop_result;
         }
 
         await page.evaluate(() => {
