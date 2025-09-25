@@ -133,6 +133,10 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
             await page.click('#AreasList article:first-child');
             return;
         }
+
+        await page.evaluate(() => {
+            document.querySelector('#SearchInput').value = '';
+        });
         
         await page.type('#SearchInput', project_name);
 
