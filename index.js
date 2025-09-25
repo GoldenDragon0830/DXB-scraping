@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import routes from "./routes/index.js";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { createObjectCsvWriter as createCsvWriter } from 'csv-writer';
@@ -12,7 +12,7 @@ import axios from 'axios';
 import cron from 'node-cron';
 import moment from "moment";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 const app = express();
 
