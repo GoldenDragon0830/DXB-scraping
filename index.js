@@ -116,7 +116,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
         await waitForTimeout(1000);
 
         // Get the first item's strong text
-        const is_correct_building = await page.evaluate(() => {
+        const is_correct_building = await page.evaluate((building_name) => {
             const areasList = document.querySelector('#AreasList');
             if (!areasList) return false;
             
