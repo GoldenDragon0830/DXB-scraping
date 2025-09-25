@@ -119,16 +119,13 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
         const is_correct_building = await page.evaluate((building_name) => {
             const areasList = document.querySelector('#AreasList');
             if (!areasList) return false;
-            console.log(1);
             
             const firstArticle = areasList.querySelector('article:first-child');
             if (!firstArticle) return false;
-            console.log(2);
             
             const strongElement = firstArticle.querySelector('strong');
-            console.log(strongElement);
             return strongElement ? strongElement.textContent.trim() == building_name : false;
-        });
+        }, building_name);
         
         console.log('Is Correct Building', is_correct_building);
         
@@ -146,4 +143,3 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 app.listen(process.env.PORT || 5001, () =>
     console.log(`Scraping app listening on port ${process.env.PORT || 5001}!`)
 );
-  
