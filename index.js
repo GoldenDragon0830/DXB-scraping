@@ -241,7 +241,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
     } catch (error) {
         console.error('Error during scraping:', error);
     } finally {
-        // await browser.close();
+        await browser.close();
         console.log('Browser closed');
     }
 }
