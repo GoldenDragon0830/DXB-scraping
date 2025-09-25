@@ -162,7 +162,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
                 return {median_price, median_price_percent, median_price_sqft, median_price_sqft_percent, transactions, transactions_percent, rental_yield};
             });
 
-            conosle.log(prop_result)
+            console.log(prop_result)
             
             return prop_result;
         }
