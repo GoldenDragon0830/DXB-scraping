@@ -37,6 +37,8 @@ app.post('/api/scrape', async (req, res) => {
     try {
         const { property_id, project_name, building_name } = req.body;
 
+        console.log('@@@@@@@@@@@@@');
+
         const results = await scrapeTransactionDetails(targetUrl, property_id, project_name, building_name);
 
         res.json({ 
