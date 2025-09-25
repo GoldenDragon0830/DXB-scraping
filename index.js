@@ -37,8 +37,6 @@ app.post('/api/scrape', async (req, res) => {
     try {
         const { property_id, project_name, building_name } = req.body;
 
-        console.log('@@@@@@@@@@@@@');
-
         const results = await scrapeTransactionDetails(targetUrl, property_id, project_name, building_name);
 
         res.json({ 
@@ -126,16 +124,19 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
             const spanElement = firstArticle.querySelector('span');
 
             const spanTextList = spanElement.textContent.trim().split(', ');
-            console.log(spanTextList.indexOf(building_name.trim()));
             
-            const strongElement = firstArticle.querySelector('strong');
-            return strongElement ? strongElement.textContent.trim() == building_name : false;
+            return spanElement ? spanTextList.indexOf(building_name.trim()) : false;
         }, building_name);
         
-        console.log('Is Correct Building', is_correct_building);
+        if(is_correct_building >= 0) {
+            // Click on the first item
+            await page.click('#AreasList article:first-child');
+            return;
+        }
         
-        // Click on the first item
-        // await page.click('#AreasList article:first-child');
+        await page.type('#SearchInput', project_name);
+
+        await page.waitForSelector("#AreasList", {timeout: 30000});
 
     } catch (error) {
         console.error('Error during scraping:', error);
