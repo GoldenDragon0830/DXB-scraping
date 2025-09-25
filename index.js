@@ -31,8 +31,29 @@ async function waitForTimeout(timeout) {
     });
 }
 
-async function scrapeTransactionDetails(url) {
+const targetUrl = 'https://dxbinteract.com/dubai-house-prices/';
 
+app.post('/api/scrape', async (req, res) => {
+    try {
+        const { property_id, project_name, building_name } = req.body;
+
+        const results = await scrapeTransactionDetails(targetUrl, property_id, project_name, building_name);
+
+        res.json({ 
+            success: true, 
+            message: 'Scraping completed successfully',
+            data: results 
+        });
+    } catch (error) {
+        console.error('Scraping API error:', error);
+        res.status(500).json({ 
+            error: 'Scraping failed', 
+            message: error.message 
+        });
+    }
+});
+
+async function scrapeTransactionDetails(url, property_id, project_name, building_name) {
     // const proxyServer = '137.59.4.211:6080';
 
     const browser = await puppeteer.launch({
@@ -52,11 +73,6 @@ async function scrapeTransactionDetails(url) {
         await page.setExtraHTTPHeaders({
             'accept-language': 'en-US,en;q=0.9',
         });
-
-        // await page.authenticate({
-        //     username: 'PICpic123',
-        //     password: 'upwork123'
-        // });
 
         await page.goto(url, {
             waitUntil: 'load',
@@ -82,235 +98,37 @@ async function scrapeTransactionDetails(url) {
         await frame.waitForSelector("#B5785800721449667599", {timeout: 30000});
         await frame.click('#B5785800721449667599');
 
-        const districts = [
-            "Jumeirah Lakes Towers",
-            "Downtown Dubai",
-            "Business Bay",
-            "Dubai Marina, Marsa Dubai",
-            "Bluewaters Island",
-            "Jumeirah Village Circle (JVC) ",
-            "Sobha Hartland 2, Bukadra",
-            "Sobha One, Ras Al Khor Industrial First",
-            "Dubai Creek Harbour",
-            "Emaar Beachfront (all buildings)",
-            "Dubai Land, Wadi Al Safa 4",
-            "Arjan, Al Barshaa South Third",
-            "Dubai South Residential District, Madinat Al Mataar"
-        ]
 
-        let dlg_index = 0;
+        await waitForTimeout(3000);
+    
+        await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
+        await page.click('#LocationsStack > a');
 
-        // const row = await prisma.Property.findFirst({
-        //     orderBy: {
-        //       id: 'asc',
-        //     },
-        //   });
+        await page.waitForSelector("#SearchInput", {timeout: 30000});
+        await page.type('#SearchInput', building_name);
 
-        let id = row.id;
-        // let id = -10000;
-
-        // for(let k=0; k<districts.length; k++) {
-        //     console.log(districts[k]);
-            
-        //     let allDetails = [];
-
-        //     await waitForTimeout(3000);
+        // Wait for search results to appear
+        await page.waitForSelector("#AreasList", {timeout: 30000});
         
-        //     await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
-        //     await page.click('#LocationsStack > a');
-    
-        //     await page.waitForSelector("#SearchInput", {timeout: 30000});
-        //     await page.type('#SearchInput', districts[k]);
+        // Wait a bit for results to fully load
+        await waitForTimeout(1000);
+
+        // Get the first item's strong text
+        const is_correct_building = await page.evaluate(() => {
+            const areasList = document.querySelector('#AreasList');
+            if (!areasList) return false;
             
-        //     await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
-        //     await page.click('#AreasList > article:first-of-type');
-    
-        //     await waitForTimeout(2000);
+            const firstArticle = areasList.querySelector('article:first-child');
+            if (!firstArticle) return false;
             
-        //     await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-        //     await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
-    
-        //     await waitForTimeout(2000);
-    
-        //     let detailCount = 0;
-        //     let pageNum = 0;
-        //     let index = 0;
-    
-        //     do{
-        //         // pageNum++;
-        //         // if(pageNum < 20) {
-        //         //     const nextButton = await page.$$('a#soldhistorynext');
-        //         //     if(nextButton.length > 0)
-        //         //         nextButton[0].click();
-        //         //     else
-        //         //         break;
-    
-        //         //     await waitForTimeout(2000);
-        //         //     continue;
-        //         // }
-
-        //         const detailButtons = await page.$$('a.t-Button--iconRight');
-    
-        //         // console.log('Row count => ', detailButtons.length);
-
-        //         if (detailButtons.length > 0) {
-        //             detailCount += detailButtons.length;
-        //             for(let i=0; i<detailButtons.length ; i++) {
-        //                 await detailButtons[i].click();
-        //                 await waitForTimeout(3000);
-        //                 index++;
-        //                 dlg_index++;
-        //                 console.log(index);
-
-        //                 await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
-        //                 let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
-        //                 let frame = await frameHandle.contentFrame();
-    
-        //                 // await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
-        //                 await waitForTimeout(2000);
-    
-        //                 let content = await frame.evaluate(async () => {
-                            
-        //                     const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
-        //                     const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
-    
-        //                     const priceUnitElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1 > sub");
-        //                     const priceUnit =  priceUnitElement ? priceUnitElement.innerText.trim() : null;
-    
-        //                     const dateElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > div > div:nth-child(2)");
-        //                     const date =  dateElement ? dateElement.innerText.trim() : null;
-    
-        //                     const addressElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(2) > b");
-        //                     const address =  addressElement ? addressElement.innerText.trim() : null;
-
-        //                     const propNoElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(4) > b");
-        //                     const propNo =  propNoElement ? propNoElement.innerText.trim() : null;
-    
-        //                     const bedElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(6) > b");
-        //                     const bedroom =  bedElement ? bedElement.innerText.trim() : null;
-    
-        //                     const categoryElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(8) > b");
-        //                     const category =  categoryElement ? categoryElement.innerText.trim() : null;
-    
-        //                     const sizeElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(10) > b");
-        //                     const unitSize =  sizeElement ? sizeElement.innerText.trim() : null;
-    
-        //                     const prevPriceElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(12) > b");
-        //                     const prevPrice =  prevPriceElement ? prevPriceElement.innerText.trim() : null;
-    
-        //                     const statusElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(14) > b");
-        //                     const status =  statusElement ? statusElement.innerText.trim() : null;
-    
-        //                     const soldByElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(16) > b");
-        //                     const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
-    
-        //                     const grossRentalElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(18) > b");
-        //                     const grossRental =  grossRentalElement ? grossRentalElement.innerText.trim() : null;
-    
-        //                     const lastRentalAmountElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(20) > b");
-        //                     const lastRentalAmount =  lastRentalAmountElement ? lastRentalAmountElement.innerText.trim() : null;
-    
-    
-        //                     const ulElement = document.querySelector('#PropSaleHistory_cards');
-        //                     let liElements;
-        //                     let prevSales = [];
-    
-        //                     if (ulElement) {
-        //                         liElements = ulElement.querySelectorAll('li'); 
-    
-        //                         for (let j=0; j<liElements.length; j++) {
-        //                             const soldDateElement = liElements[j].querySelector("h5.margin-none");
-        //                             const soldDate =  soldDateElement ? soldDateElement.innerText.trim() : null;
-    
-        //                             const soldByElement = liElements[j].querySelector("span.u-color-11-text");
-        //                             const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
-    
-        //                             const soldPriceElement = liElements[j].querySelector("h4.margin-none > span");
-        //                             const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
-    
-        //                             const unitSizeElement = liElements[j].querySelector("p.u-color-11-text");
-        //                             const unitSize =  unitSizeElement ? unitSizeElement.innerText.trim() : null;
-    
-        //                             prevSales.push({soldDate, soldBy, soldPrice, unitSize});
-        //                         }
-        //                     }
-    
-        //                     return {soldPrice, priceUnit, date, address, propNo, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
-    
-        //                 });
-
-        //                 console.log(content);
-
-        //                 id = id-1;
-
-        //                 let price;
-
-        //                 if (content.prevSales.length) {
-        //                     price = Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, ''));
-        //                 } else {
-        //                     let soldPrice = content.soldPrice.slice(0, content.soldPrice.length-3);
-
-        //                     if (soldPrice[soldPrice.length-1] == 'M')
-        //                         price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000000;
-        //                     else if (soldPrice[soldPrice.length-1] == 'K')
-        //                         price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000;
-        //                     else
-        //                         price = Number(soldPrice);
-        //                 }
-
-        //                 let transaction = {
-        //                     platform: "dxb",
-        //                     id: id,
-        //                     ownerID: id,
-        //                     userExternalID: id.toString(),
-        //                     sourceID: id,
-        //                     state: content.status,
-        //                     purpose: "for-sale",
-        //                     price: price,
-        //                     externalID: id.toString(),
-        //                     location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
-        //                     dxb_category: content.category,
-        //                     dxb_bedroom: content.bedroom,
-        //                     dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
-        //                     dxb_transaction: content.prevSales,
-        //                     dxb_soldPrice: content.soldPrice,
-        //                     dxb_soldDate: content.date,
-        //                     dxb_soldBy: content.soldBy,
-        //                     dxb_prevPrice: content.prevPrice,
-        //                     dxb_grossRental: content.grossRental,
-        //                     title: content.address,
-        //                     dxb_address: content.address,
-        //                     dxb_lastRentalAmount: content.lastRentalAmount,
-        //                     dxb_propNo: content.propNo,
-        //                     type: "transaction",
-        //                     created_at: moment(Date.now()).toDate(),
-        //                     updated_at: moment(Date.now()).toDate(),
-        //                     reactivated_at: moment(Date.now()).toDate()
-        //                 }
-
-        //                 allDetails.push(transaction);
-    
-        //                 await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
-        //                 await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
-        //             }
-        //         }
-    
-        //         const nextButton = await page.$$('a#soldhistorynext');
-    
-        //         if(nextButton.length > 0)
-        //             nextButton[0].click();
-        //         else
-        //             break;
-    
-        //         await waitForTimeout(2000);
-        //     }while(1);
-
-        //     await prisma.Property.createMany({
-        //         data: allDetails
-        //     });
-    
-        //     // await writeToCSV(allDetails);
-        // }
+            const strongElement = firstArticle.querySelector('strong');
+            return strongElement ? strongElement.textContent.trim() == building_name : false;
+        });
+        
+        console.log('Is Correct Building', is_correct_building);
+        
+        // Click on the first item
+        // await page.click('#AreasList article:first-child');
 
     } catch (error) {
         console.error('Error during scraping:', error);
@@ -319,37 +137,6 @@ async function scrapeTransactionDetails(url) {
         console.log('Browser closed');
     }
 }
-
-async function writeToCSV(data) {
-    const csvWriter = createCsvWriter({
-        path: 'transaction-details.csv',
-        header: [
-            { id: 'soldPrice', title: 'Sold Price' },
-            { id: 'priceUnit', title: 'Price Unit' },
-            { id: 'date', title: 'Date' },
-            { id: 'address', title: 'Address' },
-            { id: 'bedroom', title: 'Bedroom' },
-            { id: 'category', title: 'Category' },
-            { id: 'unitSize', title: 'Unit Size' },
-            { id: 'prevPrice', title: 'Previous Price' },
-            { id: 'status', title: 'Status' },
-            { id: 'soldBy', title: 'Sold By' },
-            { id: 'grossRental', title: 'Gross Rental' },
-            { id: 'lastRentalAmount', title: 'Last Rental Amount' },
-        ]
-    });
-
-    await csvWriter.writeRecords(data);
-    console.log('Data successfully written to CSV file');
-}
-
-const targetUrl = 'https://dxbinteract.com/dubai-house-prices/';
-
-scrapeTransactionDetails(targetUrl)
-  .then(results => {
-    console.log(`Scraping completed. Extracted ${results?.length || 0} transaction details.`);
-  })
-  .catch(error => console.error('Scraping failed:', error));
 
 app.listen(process.env.PORT, () =>
     console.log(`Scraping app listening on port ${process.env.PORT}!`)
