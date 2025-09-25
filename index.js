@@ -141,22 +141,22 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
                 const median_price_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)");
                 const median_price = median_price_element ? median_price_element.innerText.trim() : null;
 
-                const median_price_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(3) > span").textContent.trim();
+                const median_price_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(3) > span");
                 const median_price_percent = median_price_percent_element ? median_price_percent_element.innerText.trim() : null;
                 
-                const median_price_sqft_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(2) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
+                const median_price_sqft_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(2) > span > span.t-BadgeList-value > div > span:nth-child(2)");
                 const median_price_sqft = median_price_sqft_element ? median_price_sqft_element.innerText.trim() : null;
                 
-                const median_price_sqft_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(2) > span > span.t-BadgeList-value > div > span:nth-child(3) > span").textContent.trim();
+                const median_price_sqft_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(2) > span > span.t-BadgeList-value > div > span:nth-child(3) > span");
                 const median_price_sqft_percent = median_price_sqft_percent_element ? median_price_sqft_percent_element.innerText.trim() : null;
                 
-                const transactions_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(3) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
+                const transactions_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(3) > span > span.t-BadgeList-value > div > span:nth-child(2)");
                 const transactions = transactions_element ? transactions_element.innerText.trim() : null;
                 
-                const transactions_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(3) > span > span.t-BadgeList-value > div > span:nth-child(3) > span").textContent.trim();
+                const transactions_percent_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(3) > span > span.t-BadgeList-value > div > span:nth-child(3) > span");
                 const transactions_percent = transactions_percent_element ? transactions_percent_element.innerText.trim() : null;
                 
-                const rental_yield_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(4) > span > span.t-BadgeList-value > div > span.value").textContent.trim();
+                const rental_yield_element = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(4) > span > span.t-BadgeList-value > div > span.value");
                 const rental_yield = rental_yield_element ? rental_yield_element.innerText.trim() : null;
 
                 return {median_price, median_price_percent, median_price_sqft, median_price_sqft_percent, transactions, transactions_percent, rental_yield};
