@@ -100,217 +100,217 @@ async function scrapeTransactionDetails(url) {
 
         let dlg_index = 0;
 
-        const row = await prisma.Property.findFirst({
-            orderBy: {
-              id: 'asc',
-            },
-          });
+        // const row = await prisma.Property.findFirst({
+        //     orderBy: {
+        //       id: 'asc',
+        //     },
+        //   });
 
         let id = row.id;
         // let id = -10000;
 
-        for(let k=0; k<districts.length; k++) {
-            console.log(districts[k]);
+        // for(let k=0; k<districts.length; k++) {
+        //     console.log(districts[k]);
             
-            let allDetails = [];
+        //     let allDetails = [];
 
-            await waitForTimeout(3000);
+        //     await waitForTimeout(3000);
         
-            await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
-            await page.click('#LocationsStack > a');
+        //     await page.waitForSelector("#LocationsStack > a", {timeout: 30000});
+        //     await page.click('#LocationsStack > a');
     
-            await page.waitForSelector("#SearchInput", {timeout: 30000});
-            await page.type('#SearchInput', districts[k]);
+        //     await page.waitForSelector("#SearchInput", {timeout: 30000});
+        //     await page.type('#SearchInput', districts[k]);
             
-            await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
-            await page.click('#AreasList > article:first-of-type');
+        //     await page.waitForSelector('#AreasList > article:first-of-type', { timeout: 30000 });
+        //     await page.click('#AreasList > article:first-of-type');
     
-            await waitForTimeout(2000);
+        //     await waitForTimeout(2000);
             
-            await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
-            await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
+        //     await page.waitForSelector('#R7990151324798006877 > div > ul > li:nth-child(2)', { timeout: 30000 });
+        //     await page.click('#R7990151324798006877 > div > ul > li:nth-child(2)');
     
-            await waitForTimeout(2000);
+        //     await waitForTimeout(2000);
     
-            let detailCount = 0;
-            let pageNum = 0;
-            let index = 0;
+        //     let detailCount = 0;
+        //     let pageNum = 0;
+        //     let index = 0;
     
-            do{
-                // pageNum++;
-                // if(pageNum < 20) {
-                //     const nextButton = await page.$$('a#soldhistorynext');
-                //     if(nextButton.length > 0)
-                //         nextButton[0].click();
-                //     else
-                //         break;
+        //     do{
+        //         // pageNum++;
+        //         // if(pageNum < 20) {
+        //         //     const nextButton = await page.$$('a#soldhistorynext');
+        //         //     if(nextButton.length > 0)
+        //         //         nextButton[0].click();
+        //         //     else
+        //         //         break;
     
-                //     await waitForTimeout(2000);
-                //     continue;
-                // }
+        //         //     await waitForTimeout(2000);
+        //         //     continue;
+        //         // }
 
-                const detailButtons = await page.$$('a.t-Button--iconRight');
+        //         const detailButtons = await page.$$('a.t-Button--iconRight');
     
-                // console.log('Row count => ', detailButtons.length);
+        //         // console.log('Row count => ', detailButtons.length);
 
-                if (detailButtons.length > 0) {
-                    detailCount += detailButtons.length;
-                    for(let i=0; i<detailButtons.length ; i++) {
-                        await detailButtons[i].click();
-                        await waitForTimeout(3000);
-                        index++;
-                        dlg_index++;
-                        console.log(index);
+        //         if (detailButtons.length > 0) {
+        //             detailCount += detailButtons.length;
+        //             for(let i=0; i<detailButtons.length ; i++) {
+        //                 await detailButtons[i].click();
+        //                 await waitForTimeout(3000);
+        //                 index++;
+        //                 dlg_index++;
+        //                 console.log(index);
 
-                        await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
-                        let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
-                        let frame = await frameHandle.contentFrame();
+        //                 await page.waitForSelector(`#apex_dialog_${dlg_index}`, { visible: true });
+        //                 let frameHandle = await page.waitForSelector(`#apex_dialog_${dlg_index} > iframe`, {timeout: 3000});
+        //                 let frame = await frameHandle.contentFrame();
     
-                        // await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
-                        await waitForTimeout(2000);
+        //                 // await frame.waitForSelector('#report_7461900984040226668_catch > dl > dd:nth-child(2) > b', { timeout: 3000 });
+        //                 await waitForTimeout(2000);
     
-                        let content = await frame.evaluate(async () => {
+        //                 let content = await frame.evaluate(async () => {
                             
-                            const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
-                            const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
+        //                     const soldPriceElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1");
+        //                     const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
     
-                            const priceUnitElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1 > sub");
-                            const priceUnit =  priceUnitElement ? priceUnitElement.innerText.trim() : null;
+        //                     const priceUnitElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > h1 > sub");
+        //                     const priceUnit =  priceUnitElement ? priceUnitElement.innerText.trim() : null;
     
-                            const dateElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > div > div:nth-child(2)");
-                            const date =  dateElement ? dateElement.innerText.trim() : null;
+        //                     const dateElement = document.querySelector("#R2456939146277048660 > a-dynamic-content > div > div > div > div > div:nth-child(2)");
+        //                     const date =  dateElement ? dateElement.innerText.trim() : null;
     
-                            const addressElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(2) > b");
-                            const address =  addressElement ? addressElement.innerText.trim() : null;
+        //                     const addressElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(2) > b");
+        //                     const address =  addressElement ? addressElement.innerText.trim() : null;
 
-                            const propNoElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(4) > b");
-                            const propNo =  propNoElement ? propNoElement.innerText.trim() : null;
+        //                     const propNoElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(4) > b");
+        //                     const propNo =  propNoElement ? propNoElement.innerText.trim() : null;
     
-                            const bedElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(6) > b");
-                            const bedroom =  bedElement ? bedElement.innerText.trim() : null;
+        //                     const bedElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(6) > b");
+        //                     const bedroom =  bedElement ? bedElement.innerText.trim() : null;
     
-                            const categoryElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(8) > b");
-                            const category =  categoryElement ? categoryElement.innerText.trim() : null;
+        //                     const categoryElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(8) > b");
+        //                     const category =  categoryElement ? categoryElement.innerText.trim() : null;
     
-                            const sizeElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(10) > b");
-                            const unitSize =  sizeElement ? sizeElement.innerText.trim() : null;
+        //                     const sizeElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(10) > b");
+        //                     const unitSize =  sizeElement ? sizeElement.innerText.trim() : null;
     
-                            const prevPriceElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(12) > b");
-                            const prevPrice =  prevPriceElement ? prevPriceElement.innerText.trim() : null;
+        //                     const prevPriceElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(12) > b");
+        //                     const prevPrice =  prevPriceElement ? prevPriceElement.innerText.trim() : null;
     
-                            const statusElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(14) > b");
-                            const status =  statusElement ? statusElement.innerText.trim() : null;
+        //                     const statusElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(14) > b");
+        //                     const status =  statusElement ? statusElement.innerText.trim() : null;
     
-                            const soldByElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(16) > b");
-                            const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
+        //                     const soldByElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(16) > b");
+        //                     const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
     
-                            const grossRentalElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(18) > b");
-                            const grossRental =  grossRentalElement ? grossRentalElement.innerText.trim() : null;
+        //                     const grossRentalElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(18) > b");
+        //                     const grossRental =  grossRentalElement ? grossRentalElement.innerText.trim() : null;
     
-                            const lastRentalAmountElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(20) > b");
-                            const lastRentalAmount =  lastRentalAmountElement ? lastRentalAmountElement.innerText.trim() : null;
+        //                     const lastRentalAmountElement = document.querySelector("#report_7461900984040226668_catch > dl > dd:nth-child(20) > b");
+        //                     const lastRentalAmount =  lastRentalAmountElement ? lastRentalAmountElement.innerText.trim() : null;
     
     
-                            const ulElement = document.querySelector('#PropSaleHistory_cards');
-                            let liElements;
-                            let prevSales = [];
+        //                     const ulElement = document.querySelector('#PropSaleHistory_cards');
+        //                     let liElements;
+        //                     let prevSales = [];
     
-                            if (ulElement) {
-                                liElements = ulElement.querySelectorAll('li'); 
+        //                     if (ulElement) {
+        //                         liElements = ulElement.querySelectorAll('li'); 
     
-                                for (let j=0; j<liElements.length; j++) {
-                                    const soldDateElement = liElements[j].querySelector("h5.margin-none");
-                                    const soldDate =  soldDateElement ? soldDateElement.innerText.trim() : null;
+        //                         for (let j=0; j<liElements.length; j++) {
+        //                             const soldDateElement = liElements[j].querySelector("h5.margin-none");
+        //                             const soldDate =  soldDateElement ? soldDateElement.innerText.trim() : null;
     
-                                    const soldByElement = liElements[j].querySelector("span.u-color-11-text");
-                                    const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
+        //                             const soldByElement = liElements[j].querySelector("span.u-color-11-text");
+        //                             const soldBy =  soldByElement ? soldByElement.innerText.trim() : null;
     
-                                    const soldPriceElement = liElements[j].querySelector("h4.margin-none > span");
-                                    const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
+        //                             const soldPriceElement = liElements[j].querySelector("h4.margin-none > span");
+        //                             const soldPrice =  soldPriceElement ? soldPriceElement.innerText.trim() : null;
     
-                                    const unitSizeElement = liElements[j].querySelector("p.u-color-11-text");
-                                    const unitSize =  unitSizeElement ? unitSizeElement.innerText.trim() : null;
+        //                             const unitSizeElement = liElements[j].querySelector("p.u-color-11-text");
+        //                             const unitSize =  unitSizeElement ? unitSizeElement.innerText.trim() : null;
     
-                                    prevSales.push({soldDate, soldBy, soldPrice, unitSize});
-                                }
-                            }
+        //                             prevSales.push({soldDate, soldBy, soldPrice, unitSize});
+        //                         }
+        //                     }
     
-                            return {soldPrice, priceUnit, date, address, propNo, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
+        //                     return {soldPrice, priceUnit, date, address, propNo, bedroom, category, unitSize, prevPrice, status, soldBy, grossRental, lastRentalAmount, prevSales};
     
-                        });
+        //                 });
 
-                        console.log(content);
+        //                 console.log(content);
 
-                        id = id-1;
+        //                 id = id-1;
 
-                        let price;
+        //                 let price;
 
-                        if (content.prevSales.length) {
-                            price = Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, ''));
-                        } else {
-                            let soldPrice = content.soldPrice.slice(0, content.soldPrice.length-3);
+        //                 if (content.prevSales.length) {
+        //                     price = Number(content.prevSales[0].soldPrice.split(' ')[1].replace(/,/g, ''));
+        //                 } else {
+        //                     let soldPrice = content.soldPrice.slice(0, content.soldPrice.length-3);
 
-                            if (soldPrice[soldPrice.length-1] == 'M')
-                                price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000000;
-                            else if (soldPrice[soldPrice.length-1] == 'K')
-                                price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000;
-                            else
-                                price = Number(soldPrice);
-                        }
+        //                     if (soldPrice[soldPrice.length-1] == 'M')
+        //                         price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000000;
+        //                     else if (soldPrice[soldPrice.length-1] == 'K')
+        //                         price = Number(soldPrice.slice(0, soldPrice.length-1)) * 1000;
+        //                     else
+        //                         price = Number(soldPrice);
+        //                 }
 
-                        let transaction = {
-                            platform: "dxb",
-                            id: id,
-                            ownerID: id,
-                            userExternalID: id.toString(),
-                            sourceID: id,
-                            state: content.status,
-                            purpose: "for-sale",
-                            price: price,
-                            externalID: id.toString(),
-                            location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
-                            dxb_category: content.category,
-                            dxb_bedroom: content.bedroom,
-                            dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
-                            dxb_transaction: content.prevSales,
-                            dxb_soldPrice: content.soldPrice,
-                            dxb_soldDate: content.date,
-                            dxb_soldBy: content.soldBy,
-                            dxb_prevPrice: content.prevPrice,
-                            dxb_grossRental: content.grossRental,
-                            title: content.address,
-                            dxb_address: content.address,
-                            dxb_lastRentalAmount: content.lastRentalAmount,
-                            dxb_propNo: content.propNo,
-                            type: "transaction",
-                            created_at: moment(Date.now()).toDate(),
-                            updated_at: moment(Date.now()).toDate(),
-                            reactivated_at: moment(Date.now()).toDate()
-                        }
+        //                 let transaction = {
+        //                     platform: "dxb",
+        //                     id: id,
+        //                     ownerID: id,
+        //                     userExternalID: id.toString(),
+        //                     sourceID: id,
+        //                     state: content.status,
+        //                     purpose: "for-sale",
+        //                     price: price,
+        //                     externalID: id.toString(),
+        //                     location: ("UAE, Dubai, " + content.address).split(", ").map( name=> ({"name": name}) ),
+        //                     dxb_category: content.category,
+        //                     dxb_bedroom: content.bedroom,
+        //                     dxb_unitsize: Number(content.unitSize.split(' ')[0].replace(/,/g, '')),
+        //                     dxb_transaction: content.prevSales,
+        //                     dxb_soldPrice: content.soldPrice,
+        //                     dxb_soldDate: content.date,
+        //                     dxb_soldBy: content.soldBy,
+        //                     dxb_prevPrice: content.prevPrice,
+        //                     dxb_grossRental: content.grossRental,
+        //                     title: content.address,
+        //                     dxb_address: content.address,
+        //                     dxb_lastRentalAmount: content.lastRentalAmount,
+        //                     dxb_propNo: content.propNo,
+        //                     type: "transaction",
+        //                     created_at: moment(Date.now()).toDate(),
+        //                     updated_at: moment(Date.now()).toDate(),
+        //                     reactivated_at: moment(Date.now()).toDate()
+        //                 }
 
-                        allDetails.push(transaction);
+        //                 allDetails.push(transaction);
     
-                        await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
-                        await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
-                    }
-                }
+        //                 await page.waitForSelector("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button", { timeout: 30000 });
+        //                 await page.click("#t_PageBody > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog--apex.t-Dialog-page--standard.ui-draggable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button");
+        //             }
+        //         }
     
-                const nextButton = await page.$$('a#soldhistorynext');
+        //         const nextButton = await page.$$('a#soldhistorynext');
     
-                if(nextButton.length > 0)
-                    nextButton[0].click();
-                else
-                    break;
+        //         if(nextButton.length > 0)
+        //             nextButton[0].click();
+        //         else
+        //             break;
     
-                await waitForTimeout(2000);
-            }while(1);
+        //         await waitForTimeout(2000);
+        //     }while(1);
 
-            await prisma.Property.createMany({
-                data: allDetails
-            });
+        //     await prisma.Property.createMany({
+        //         data: allDetails
+        //     });
     
-            // await writeToCSV(allDetails);
-        }
+        //     // await writeToCSV(allDetails);
+        // }
 
     } catch (error) {
         console.error('Error during scraping:', error);
