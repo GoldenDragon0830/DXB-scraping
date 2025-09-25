@@ -125,7 +125,8 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
             const spanElement = firstArticle.querySelector('span');
 
-            console.log(spanElement.textContent.trim());
+            const spanTextList = spanElement.textContent.trim().split(', ');
+            console.log(spanTextList.find(building_name.trim()));
             
             const strongElement = firstArticle.querySelector('strong');
             return strongElement ? strongElement.textContent.trim() == building_name : false;
