@@ -136,7 +136,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
             await page.waitForSelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)", { timeout: 30000 });
             
-            const median_price = await page.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
+            const median_price = await document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
             
             console.log(median_price)
 
