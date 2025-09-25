@@ -134,7 +134,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
 
             await waitForTimeout(3000);
 
-            await page.waitForSelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)", { timeout: 30000 });
+            await page.waitForSelector("#report_7995429268703774766_catch", { timeout: 30000 });
             
             const result = await page.evaluate(() => {
                 const median_price = document.querySelector("#report_7995429268703774766_catch > ul > li:nth-child(1) > span > span.t-BadgeList-value > div > span:nth-child(2)").textContent.trim();
