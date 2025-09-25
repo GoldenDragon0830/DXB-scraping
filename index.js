@@ -132,7 +132,7 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
             // Click on the first item
             await page.click('#AreasList article:first-child');
 
-            await waitForTimeout(3000);
+            await waitForTimeout(7000);
 
             await page.waitForSelector("#report_7995429268703774766_catch", { timeout: 30000 });
             
