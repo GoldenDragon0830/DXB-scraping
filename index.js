@@ -228,7 +228,15 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
             return prop_result;
         }
 
-        return {};
+        return {
+                median_price: null, 
+                median_price_percent: null, 
+                median_price_sqft: null,  
+                median_price_sqft_percent: null, 
+                transactions: null, 
+                transactions_percent: null, 
+                rental_yield: null
+            };
 
     } catch (error) {
         console.error('Error during scraping:', error);
