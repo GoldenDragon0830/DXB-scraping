@@ -122,6 +122,10 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
             
             const firstArticle = areasList.querySelector('article:first-child');
             if (!firstArticle) return false;
+
+            const spanElement = firstArticle.querySelector('span');
+
+            console.log(spanElement.textContent.trim());
             
             const strongElement = firstArticle.querySelector('strong');
             return strongElement ? strongElement.textContent.trim() == building_name : false;
