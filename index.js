@@ -119,11 +119,14 @@ async function scrapeTransactionDetails(url, property_id, project_name, building
         const is_correct_building = await page.evaluate((building_name) => {
             const areasList = document.querySelector('#AreasList');
             if (!areasList) return false;
+            console.log(1);
             
             const firstArticle = areasList.querySelector('article:first-child');
             if (!firstArticle) return false;
+            console.log(2);
             
             const strongElement = firstArticle.querySelector('strong');
+            console.log(strongElement);
             return strongElement ? strongElement.textContent.trim() == building_name : false;
         });
         
